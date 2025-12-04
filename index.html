@@ -83,12 +83,12 @@
     }
 
     .btn-primary {
-      background-color: #00acc1;
+      background-color: #097EAB;
       color: white;
     }
 
     .btn-primary:hover {
-      background-color: #00bcd4;
+      background-color: #0a8fc2;
     }
 
     .btn-outline {
@@ -226,17 +226,57 @@
       cursor: pointer;
       transition: all 0.2s;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .filter-pill:hover {
-      border-color: #00838f;
-      color: #00838f;
+      border-color: #999;
+      background: #f5f5f5;
     }
 
     .filter-pill.active {
-      background: #00838f;
-      border-color: #00838f;
-      color: white;
+      background: #e8e8e8;
+      border-color: #ccc;
+      color: #333;
+    }
+
+    .filter-pill .close-icon {
+      display: none;
+      font-size: 16px;
+      margin-left: 2px;
+      margin-right: -4px;
+    }
+
+    .filter-pill.active .close-icon {
+      display: inline;
+    }
+
+    .reset-filters {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border: none;
+      background: transparent;
+      color: #666;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .reset-filters:hover {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .reset-filters.visible {
+      display: flex;
+    }
+
+    .reset-filters .material-icons-outlined {
+      font-size: 20px;
     }
 
     .filter-right {
@@ -341,13 +381,13 @@
     .card-label {
       font-size: 15px;
       font-weight: 600;
-      color: #333;
+      color: #222;
       margin-bottom: 4px;
     }
 
     .card-location {
       font-size: 13px;
-      color: #666;
+      color: #555;
       margin-bottom: 12px;
       padding-bottom: 12px;
       border-bottom: 1px solid #eee;
@@ -356,13 +396,13 @@
     .card-price {
       font-size: 15px;
       font-weight: 600;
-      color: #333;
+      color: #222;
       margin-bottom: 2px;
     }
 
     .card-price-sqm {
       font-size: 12px;
-      color: #888;
+      color: #666;
       margin-bottom: 12px;
       padding-bottom: 12px;
       border-bottom: 1px solid #eee;
@@ -371,18 +411,20 @@
     .card-details {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      font-size: 12px;
+      gap: 6px 8px;
+      font-size: 13px;
       margin-bottom: 16px;
     }
 
     .card-detail-label {
-      color: #888;
+      color: #555;
+      font-weight: 500;
     }
 
     .card-detail-value {
-      color: #333;
+      color: #222;
       text-align: right;
+      font-weight: 500;
     }
 
     .card-milestone {
@@ -783,13 +825,16 @@
       </div>
       <div class="filter-row">
         <div class="filter-pills">
-          <button class="filter-pill" data-priority="0">Hohe Priorität (<span id="countPriority0">0</span>)</button>
-          <button class="filter-pill" data-priority="1">Normale Priorität (<span id="countPriority1">0</span>)</button>
-          <button class="filter-pill" data-priority="2">Geringe Priorität (<span id="countPriority2">0</span>)</button>
-          <button class="filter-pill" data-priority="3">Keine Priorität (<span id="countPriority3">0</span>)</button>
-          <button class="filter-pill" data-priority="null">Keine Angabe</button>
+          <button class="filter-pill" data-priority="0">Hohe Priorität (<span id="countPriority0">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="1">Normale Priorität (<span id="countPriority1">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="2">Geringe Priorität (<span id="countPriority2">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="3">Keine Priorität (<span id="countPriority3">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="null">Keine Angabe<span class="material-icons-outlined close-icon">close</span></button>
         </div>
         <div class="filter-right">
+          <button class="reset-filters" id="resetFilters" title="Alle Filter zurücksetzen">
+            <span class="material-icons-outlined">replay</span>
+          </button>
           <div class="stats-count"><span id="objectCount">0</span> Objekte</div>
           <button class="filter-btn">
             <span>Filter</span>
@@ -952,6 +997,27 @@
       }
     }
 
+    // Update reset button visibility
+    function updateResetButtonVisibility() {
+      const resetBtn = document.getElementById('resetFilters');
+      if (activeFilters.size > 0 || searchQuery) {
+        resetBtn.classList.add('visible');
+      } else {
+        resetBtn.classList.remove('visible');
+      }
+    }
+
+    // Reset all filters
+    function resetAllFilters() {
+      activeFilters.clear();
+      searchQuery = '';
+      document.getElementById('searchInput').value = '';
+      document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      applyFilters();
+    }
+
     // Apply filters
     function applyFilters() {
       filteredProperties = properties.filter(prop => {
@@ -983,6 +1049,7 @@
 
       renderCards();
       updateUrlParams();
+      updateResetButtonVisibility();
     }
 
     // Render cards
@@ -1037,6 +1104,9 @@
           applyFilters();
         });
       });
+
+      // Setup reset button
+      document.getElementById('resetFilters').addEventListener('click', resetAllFilters);
     }
 
     // Setup search
