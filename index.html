@@ -537,7 +537,12 @@
       if (md) {
         md.marker.getElement().classList.add('selected');
         map.flyTo({ center: [prop.lng, prop.lat], zoom: 13, duration: 1500 });
-        setTimeout(() => { md.marker.togglePopup(); }, 1600);
+        setTimeout(() => {
+          const popup = md.marker.getPopup();
+          if (popup && !popup.isOpen()) {
+            md.marker.togglePopup();
+          }
+        }, 1600);
       }
     }
 
