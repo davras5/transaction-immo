@@ -103,7 +103,7 @@
     .btn-outline:hover { background-color: rgba(255,255,255,0.1); }
 
     /* --- Search & Filter --- */
-    .search-section { background: var(--neutral-50); padding: 16px 0; flex-shrink: 0; }
+    .search-section { background: var(--neutral-50); padding: 16px 0; flex-shrink: 0; border-bottom: 1px solid var(--neutral-200); }
     .search-section-inner { max-width: 1440px; margin: 0 auto; padding: 0 24px; }
     .search-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
     .search-input-wrapper { flex: 1; position: relative; }
@@ -1691,7 +1691,6 @@
                 </div>
               </div>
               <div class="detail-links">
-                <div class="detail-data-label">Verortung</div>
                 <a href="https://www.google.com/maps?q=${prop.lat},${prop.lng}" target="_blank" rel="noopener" class="detail-link">
                   <span class="material-icons-outlined">open_in_new</span>
                   Google Maps
@@ -1704,6 +1703,7 @@
                   <span class="material-icons-outlined">open_in_new</span>
                   ÖREB-Kataster
                 </a>
+                <div class="detail-data-label">Verortung</div>
               </div>
             </div>
 
