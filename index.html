@@ -58,6 +58,7 @@
     }
     .search-input:focus { outline: none; border-color: #00838f; box-shadow: 0 0 0 3px rgba(0,131,143,0.1); }
     .view-toggle { display: flex; background: #f5f5f5; border-radius: 6px; padding: 4px; }
+    .view-toggle .material-icons-outlined { font-size: 20px; }
     .view-btn {
       padding: 8px 12px; border: none; background: transparent; cursor: pointer;
       border-radius: 4px; color: #666; display: flex; align-items: center; justify-content: center;
@@ -95,8 +96,9 @@
     }
     .filter-btn:hover { border-color: #00838f; color: #00838f; }
     .filter-btn.has-filters { border-color: #666; color: #333; background: #f0f0f0; }
+    .filter-btn.panel-open { border-color: #444; color: white; background: #555; }
     .filter-btn .filter-count {
-      background: #00838f; color: white; font-size: 11px; font-weight: 600;
+      background: #555; color: white; font-size: 11px; font-weight: 600;
       padding: 2px 6px; border-radius: 10px; margin-left: 2px;
     }
 
@@ -791,11 +793,13 @@
     function openFilterModal() {
       renderFilterModal();
       document.getElementById('filterModalOverlay').classList.add('active');
+      document.getElementById('filterBtn').classList.add('panel-open');
       document.body.style.overflow = 'hidden';
     }
 
     function closeFilterModal() {
       document.getElementById('filterModalOverlay').classList.remove('active');
+      document.getElementById('filterBtn').classList.remove('panel-open');
       document.body.style.overflow = '';
     }
 
