@@ -240,6 +240,10 @@
     .priority-3 { background-color: var(--priority-none-bg); color: var(--priority-none-text); }
     .priority-null { background-color: var(--priority-null-bg); color: var(--priority-null-text); border: 1px solid var(--priority-null-border); }
 
+    /* Image Tags Container */
+    .image-tags { position: absolute; top: 12px; left: 12px; display: flex; gap: 6px; z-index: 2; }
+    .year-tag { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; background: rgba(0, 0, 0, 0.6); color: #fff; box-shadow: var(--shadow-sm); }
+
     .card-badge { position: absolute; top: 12px; left: 12px; }
     .card-content { padding: 16px; }
     .card-label { font-size: 15px; font-weight: 600; color: var(--neutral-900); margin-bottom: 4px; }
@@ -312,12 +316,10 @@
         border-radius: 6px;
         overflow: hidden;
     }
-    /* Tag im Bild oben links */
-    .map-sidebar-image .priority-tag {
-        position: absolute;
+    /* Tags im Bild oben links */
+    .map-sidebar-image .image-tags {
         top: 10px;
         left: 10px;
-        z-index: 2;
     }
 
     .map-sidebar-content { display: flex; flex-direction: column; gap: 4px; }
@@ -459,6 +461,11 @@
       border-radius: 8px;
       background-size: cover;
       background-position: center;
+      position: relative;
+    }
+    .detail-main-image .image-tags {
+      top: 16px;
+      left: 16px;
     }
     .detail-thumb {
       background: var(--neutral-200);
@@ -1289,7 +1296,10 @@
       grid.innerHTML = data.map(prop => `
         <div class="card" onclick="openDetailPage('${prop.id}')">
           <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')">
-            <span class="card-badge priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+            <div class="image-tags">
+              <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+              <span class="year-tag">${prop.year}</span>
+            </div>
           </div>
           <div class="card-content">
             <div class="card-label">${prop.econUnit}/${prop.bldgNum} ${prop.type}</div>
@@ -1297,7 +1307,6 @@
             <div class="card-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
             <div class="card-price-sqm">${formatCHF(pricePerSqm(prop.valueMin, prop.areaGF))} - ${formatCHF(pricePerSqm(prop.valueMax, prop.areaGF))} / m² GF</div>
             <div class="card-details">
-              <span class="card-detail-label">Verkaufsjahr:</span><span class="card-detail-value">${prop.year}</span>
               <span class="card-detail-label">Geschossfläche GF:</span><span class="card-detail-value">${prop.areaGF} m²</span>
               <span class="card-detail-label">Buchwert:</span><span class="card-detail-value">${formatCHF(prop.bookValue)}</span>
             </div>
@@ -1343,11 +1352,14 @@
       document.getElementById('objectCount').textContent = data.length;
       const sidebar = document.getElementById('mapSidebar');
       
-      // Neue Struktur: Bild-Container mit Tag (Overlay) -> Inhalt (Name + Preis)
+      // Neue Struktur: Bild-Container mit Tags (Overlay) -> Inhalt (Name + Preis)
       sidebar.innerHTML = data.map(prop => `
         <div class="map-sidebar-item" data-id="${prop.id}" onclick="flyToProperty('${prop.id}')">
           <div class="map-sidebar-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')">
-            <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+            <div class="image-tags">
+              <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+              <span class="year-tag">${prop.year}</span>
+            </div>
           </div>
           <div class="map-sidebar-content">
             <div class="map-sidebar-title">${prop.type} in ${prop.zip} ${prop.city}</div>
@@ -1585,7 +1597,12 @@
         <div class="detail-hero">
           <!-- Gallery -->
           <div class="detail-gallery">
-            <div class="detail-main-image" style="background-image: url('${mainImage}')"></div>
+            <div class="detail-main-image" style="background-image: url('${mainImage}')">
+              <div class="image-tags">
+                <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+                <span class="year-tag">${prop.year}</span>
+              </div>
+            </div>
             <div class="detail-thumb" style="background-image: url('${thumbImages[0]}')"></div>
             <div class="detail-thumb" style="background-image: url('${thumbImages[1]}')"></div>
             <div class="detail-thumb" style="background-image: url('${thumbImages[2]}')"></div>
@@ -1639,14 +1656,6 @@
               <div class="detail-status-item">
                 <div class="detail-label">Meilenstein</div>
                 <div class="detail-value">${prop.milestone.current}/${prop.milestone.total} ${prop.milestone.label}</div>
-              </div>
-              <div class="detail-status-item">
-                <div class="detail-label">Geplanter Verkaufsjahr</div>
-                <div class="detail-value">${prop.year}</div>
-              </div>
-              <div class="detail-status-item">
-                <div class="detail-label">Priorisierung</div>
-                <div class="detail-value">${getPriorityLabel(prop.priority, prop.priorityLabel)}</div>
               </div>
             </div>
           </div>
