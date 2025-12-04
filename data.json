@@ -1,6 +1,8 @@
 [
   {
-    "id": "3103/SB",
+    "id": 1,
+    "econUnit": "3103",
+    "bldgNum": "SB",
     "title": "Au, Industriestrasse 40, Schopf",
     "type": "Sonderobjekt",
     "city": "Au SG",
@@ -31,7 +33,9 @@
     "lng": 9.64
   },
   {
-    "id": "3103/WB",
+    "id": 2,
+    "econUnit": "3103",
+    "bldgNum": "WB",
     "title": "Zürich, Freilagerstrasse 12, EFH",
     "type": "Einfamilienhaus",
     "city": "Zürich",
@@ -62,7 +66,9 @@
     "lng": 8.5417
   },
   {
-    "id": "3179/DW",
+    "id": 3,
+    "econUnit": "3179",
+    "bldgNum": "DW",
     "title": "Dörflingen, Hauptstrasse 25, EFH",
     "type": "Einfamilienhaus",
     "city": "Dörflingen",
@@ -93,7 +99,9 @@
     "lng": 8.7714
   },
   {
-    "id": "3337/BA",
+    "id": 4,
+    "econUnit": "3337",
+    "bldgNum": "BA",
     "title": "Rafz, Bahnhofstrasse 8, EFH",
     "type": "Einfamilienhaus",
     "city": "Rafz",
@@ -124,7 +132,9 @@
     "lng": 8.5378
   },
   {
-    "id": "3337/BB",
+    "id": 5,
+    "econUnit": "3337",
+    "bldgNum": "BB",
     "title": "Rafz, Bahnhofstrasse 10, Sonderobjekt",
     "type": "Sonderobjekt",
     "city": "Rafz",
@@ -155,7 +165,9 @@
     "lng": 8.5381
   },
   {
-    "id": "3337/GR",
+    "id": 6,
+    "econUnit": "3337",
+    "bldgNum": "GR",
     "title": "Rafz, Industrieweg 3, Technische Anlage",
     "type": "Technische Anlage",
     "city": "Rafz",
@@ -186,7 +198,9 @@
     "lng": 8.5402
   },
   {
-    "id": "3352/SB",
+    "id": 7,
+    "econUnit": "3352",
+    "bldgNum": "SB",
     "title": "Schaffhausen, Rheinweg 45, EFH",
     "type": "Einfamilienhaus",
     "city": "Schaffhausen",
@@ -217,7 +231,9 @@
     "lng": 8.6341
   },
   {
-    "id": "3815/AA",
+    "id": 8,
+    "econUnit": "3815",
+    "bldgNum": "AA",
     "title": "Wasterkingen, Badener Landstrasse 101, EFH",
     "type": "Einfamilienhaus",
     "city": "Wasterkingen",
@@ -248,7 +264,9 @@
     "lng": 8.4694
   },
   {
-    "id": "4001/HP",
+    "id": 9,
+    "econUnit": "4001",
+    "bldgNum": "HP",
     "title": "Basel, Steinenvorstadt 22, Bürogebäude",
     "type": "Bürogebäude",
     "city": "Basel",
@@ -279,7 +297,9 @@
     "lng": 7.5890
   },
   {
-    "id": "4002/HP",
+    "id": 10,
+    "econUnit": "4002",
+    "bldgNum": "HP",
     "title": "Bern, Bundesgasse 15, Mehrfamilienhaus",
     "type": "Mehrfamilienhaus",
     "city": "Bern",
@@ -310,7 +330,9 @@
     "lng": 7.4474
   },
   {
-    "id": "4003/HP",
+    "id": 11,
+    "econUnit": "4003",
+    "bldgNum": "HP",
     "title": "Luzern, Pilatusstrasse 8, Geschäftshaus",
     "type": "Geschäftshaus",
     "city": "Luzern",
