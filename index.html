@@ -484,23 +484,15 @@
       background: rgba(0, 119, 182, 0.95);
     }
 
-    /* Info Row - 3 columns */
+    /* Info Row - 3 columns: Title | Price | Status */
     .detail-info {
       display: grid;
-      grid-template-columns: 1.3fr 1fr 1.1fr;
+      grid-template-columns: 1.3fr 1.1fr 1fr;
       gap: 32px;
       padding: 24px 0;
     }
     .detail-info-section {
       padding: 0;
-    }
-    .detail-section-header {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--neutral-400);
-      margin-bottom: 12px;
-      font-weight: 500;
     }
 
     /* Title Section */
@@ -1624,6 +1616,22 @@
               <button class="detail-pdf-btn" onclick="exportToPdf()">Als PDF exportieren</button>
             </div>
 
+            <!-- Price -->
+            <div class="detail-info-section">
+              <div class="detail-price-main">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
+              <div class="detail-price-sqm">${formatCHF(pricePerSqm(prop.valueMin, prop.areaGF))} - ${formatCHF(pricePerSqm(prop.valueMax, prop.areaGF))} / m² GF</div>
+              <div class="detail-price-cards">
+                <div class="detail-price-card">
+                  <span class="detail-price-card-value">${formatCHF(prop.bookValue)}</span>
+                  <span class="detail-price-card-label">Aktueller Buchwert</span>
+                </div>
+                <div class="detail-price-card">
+                  <span class="detail-price-card-value">${formatCHF(prop.acquisitionValue)}</span>
+                  <span class="detail-price-card-label">Anschaffungswert</span>
+                </div>
+              </div>
+            </div>
+
             <!-- Status -->
             <div class="detail-info-section detail-status-section">
               <div class="detail-status-item">
@@ -1637,23 +1645,6 @@
               <div class="detail-status-item">
                 <div class="detail-label">Priorisierung</div>
                 <div class="detail-value">${getPriorityLabel(prop.priority, prop.priorityLabel)}</div>
-              </div>
-            </div>
-
-            <!-- Price -->
-            <div class="detail-info-section">
-              <div class="detail-section-header">Bewertung</div>
-              <div class="detail-price-main">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
-              <div class="detail-price-sqm">${formatCHF(pricePerSqm(prop.valueMin, prop.areaGF))} - ${formatCHF(pricePerSqm(prop.valueMax, prop.areaGF))} / m² GF</div>
-              <div class="detail-price-cards">
-                <div class="detail-price-card">
-                  <span class="detail-price-card-value">${formatCHF(prop.bookValue)}</span>
-                  <span class="detail-price-card-label">Aktueller Buchwert</span>
-                </div>
-                <div class="detail-price-card">
-                  <span class="detail-price-card-value">${formatCHF(prop.acquisitionValue)}</span>
-                  <span class="detail-price-card-label">Anschaffungswert</span>
-                </div>
               </div>
             </div>
           </div>
