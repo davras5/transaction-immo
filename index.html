@@ -67,25 +67,16 @@
     .view-btn.active { background: #383E54; color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
     .view-btn-label { font-size: 13px; font-weight: 500; margin-left: 6px; }
 
-    /* --- Filter Pills --- */
+    /* --- Filter Row & Active Filters --- */
     .filter-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .filter-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .filter-pill {
-      padding: 8px 16px; border: 1px solid #e0e0e0; border-radius: 20px;
-      font-size: 13px; background: white; color: #555; cursor: pointer;
-      transition: all 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;
+    .active-filters { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
+    .active-filter-tag {
+      padding: 6px 12px; border-radius: 16px; font-size: 12px;
+      background: #e8f5e9; color: #2e7d32; display: inline-flex; align-items: center; gap: 6px;
+      cursor: pointer; transition: all 0.2s;
     }
-    .filter-pill:hover { border-color: #999; background: #f5f5f5; }
-    .filter-pill.active { background: #e8e8e8; border-color: #ccc; color: #333; }
-    .filter-pill .close-icon { display: none; font-size: 16px; margin-left: 2px; margin-right: -4px; }
-    .filter-pill.active .close-icon { display: inline; }
-    .reset-filters {
-      display: none; align-items: center; justify-content: center; padding: 6px;
-      border: none; background: transparent; color: #666; cursor: pointer;
-      border-radius: 4px; transition: all 0.2s;
-    }
-    .reset-filters.visible { display: flex; }
-    .reset-filters:hover { background: #f0f0f0; color: #333; }
+    .active-filter-tag:hover { background: #c8e6c9; }
+    .active-filter-tag .material-icons-outlined { font-size: 14px; }
     .filter-right { display: flex; align-items: center; gap: 16px; }
     .stats-count { font-size: 14px; color: #555; font-weight: 600; }
     .filter-btn {
@@ -94,6 +85,53 @@
       font-size: 13px; color: #555; cursor: pointer; transition: all 0.2s;
     }
     .filter-btn:hover { border-color: #00838f; color: #00838f; }
+    .filter-btn.has-filters { border-color: #00838f; color: #00838f; background: #e0f7fa; }
+
+    /* --- Filter Modal --- */
+    .filter-modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); display: flex; align-items: flex-start; justify-content: center;
+      padding: 80px 20px 40px; z-index: 1000; overflow-y: auto;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    .filter-modal-overlay.active { opacity: 1; visibility: visible; }
+    .filter-modal {
+      background: white; border-radius: 12px; width: 100%; max-width: 900px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      transform: translateY(-20px); transition: transform 0.3s;
+    }
+    .filter-modal-overlay.active .filter-modal { transform: translateY(0); }
+    .filter-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; border-bottom: 1px solid #eee;
+    }
+    .filter-modal-header h2 { font-size: 18px; font-weight: 600; color: #333; margin: 0; }
+    .filter-modal-actions { display: flex; align-items: center; gap: 8px; }
+    .filter-reset-btn, .filter-close-btn {
+      width: 36px; height: 36px; border: none; background: #f5f5f5;
+      border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; color: #666;
+    }
+    .filter-reset-btn:hover, .filter-close-btn:hover { background: #e0e0e0; color: #333; }
+    .filter-modal-body { padding: 24px; }
+    .filter-columns { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+    .filter-column-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 16px; }
+    .filter-options { display: flex; flex-direction: column; gap: 8px; }
+    .filter-option {
+      padding: 10px 14px; border-radius: 6px; font-size: 13px;
+      background: #f9f9f9; color: #555; cursor: pointer; transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+    .filter-option:hover { background: #f0f0f0; border-color: #e0e0e0; }
+    .filter-option.selected { background: #e3f2fd; color: #1565c0; border-color: #90caf9; }
+
+    @media (max-width: 900px) {
+      .filter-columns { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .filter-columns { grid-template-columns: repeat(2, 1fr); }
+      .filter-modal { margin: 10px; max-width: calc(100% - 20px); }
+    }
 
     /* --- Main Layout --- */
     .main {
@@ -300,17 +338,10 @@
         </div>
       </div>
       <div class="filter-row">
-        <div class="filter-pills">
-          <button class="filter-pill" data-priority="0">Hohe Priorität <span id="countPriority0">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
-          <button class="filter-pill" data-priority="1">Normale Priorität <span id="countPriority1">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
-          <button class="filter-pill" data-priority="2">Geringe Priorität <span id="countPriority2">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
-          <button class="filter-pill" data-priority="3">Keine Priorität <span id="countPriority3">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
-          <button class="filter-pill" data-priority="null">Keine Angabe<span class="material-icons-outlined close-icon">close</span></button>
-          <button class="reset-filters" id="resetFilters" title="Alle Filter zurücksetzen"><span class="material-icons-outlined">replay</span></button>
-        </div>
+        <div class="active-filters" id="activeFiltersDisplay"></div>
         <div class="filter-right">
           <div class="stats-count"><span id="objectCount">0</span> Objekte</div>
-          <button class="filter-btn"><span>Filter</span><span class="material-icons-outlined">tune</span></button>
+          <button class="filter-btn" id="filterBtn"><span>Filter</span><span class="material-icons-outlined">tune</span></button>
         </div>
       </div>
     </div>
@@ -355,12 +386,52 @@
     </div>
   </div>
 
+  <!-- Filter Modal -->
+  <div class="filter-modal-overlay" id="filterModalOverlay">
+    <div class="filter-modal">
+      <div class="filter-modal-header">
+        <h2>Suchfilter</h2>
+        <div class="filter-modal-actions">
+          <button class="filter-reset-btn" id="filterResetBtn" title="Filter zurücksetzen">
+            <span class="material-icons-outlined">refresh</span>
+          </button>
+          <button class="filter-close-btn" id="filterCloseBtn">
+            <span class="material-icons-outlined">close</span>
+          </button>
+        </div>
+      </div>
+      <div class="filter-modal-body">
+        <div class="filter-columns">
+          <div class="filter-column">
+            <h3 class="filter-column-title">Nutzung</h3>
+            <div class="filter-options" id="filterNutzung"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">Verkaufsjahr</h3>
+            <div class="filter-options" id="filterYear"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">Priorisierung</h3>
+            <div class="filter-options" id="filterPriority"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">Meilenstein</h3>
+            <div class="filter-options" id="filterMilestone"></div>
+          </div>
+          <div class="filter-column">
+            <h3 class="filter-column-title">Portfolio</h3>
+            <div class="filter-options" id="filterPortfolio"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aWRyYXNuZXI1IiwiYSI6ImNtMm5yamVkdjA5MDcycXMyZ2I2MHRhamgifQ.m651j7WIX7MyxNh8KIQ1Gg';
 
     let properties = [];
     let filteredProperties = [];
-    let activeFilters = new Set();
     let searchQuery = '';
     let currentView = 'gallery';
     let map = null;
@@ -368,16 +439,49 @@
     let markers = [];
     let markersMap = new Map();
 
+    // Advanced filter state
+    let advancedFilters = {
+      type: new Set(),        // Nutzung
+      year: new Set(),        // Verkaufsjahr
+      priority: new Set(),    // Priorisierung
+      milestone: new Set(),   // Meilenstein
+      portfolio: new Set()    // Portfolio
+    };
+
+    // Unique values from data (populated after load)
+    let filterOptions = {
+      type: [],
+      year: [],
+      priority: [],
+      milestone: [],
+      portfolio: []
+    };
+
     function getUrlParams() {
       const params = new URLSearchParams(window.location.search);
-      return { priority: params.get('priority'), search: params.get('q'), view: params.get('view') };
+      return {
+        view: params.get('view'),
+        q: params.get('q'),
+        type: params.get('type'),
+        year: params.get('year'),
+        priority: params.get('priority'),
+        milestone: params.get('milestone'),
+        portfolio: params.get('portfolio')
+      };
     }
 
     function updateUrlParams() {
       const params = new URLSearchParams();
       if (currentView !== 'gallery') params.set('view', currentView);
-      if (activeFilters.size > 0) params.set('priority', Array.from(activeFilters).join(','));
       if (searchQuery) params.set('q', searchQuery);
+
+      // Add all advanced filters
+      Object.keys(advancedFilters).forEach(key => {
+        if (advancedFilters[key].size > 0) {
+          params.set(key, Array.from(advancedFilters[key]).join(','));
+        }
+      });
+
       const newUrl = params.toString() ? `${window.location.pathname}?${params.toString()}` : window.location.pathname;
       window.history.replaceState({}, '', newUrl);
     }
@@ -385,17 +489,17 @@
     function loadFiltersFromUrl() {
       const params = getUrlParams();
       if (params.view && ['gallery', 'list', 'map'].includes(params.view)) currentView = params.view;
-      if (params.priority) {
-        params.priority.split(',').forEach(p => {
-          activeFilters.add(p);
-          const pill = document.querySelector(`.filter-pill[data-priority="${p}"]`);
-          if (pill) pill.classList.add('active');
-        });
-      }
-      if (params.search) {
-        searchQuery = params.search;
+      if (params.q) {
+        searchQuery = params.q;
         document.getElementById('searchInput').value = searchQuery;
       }
+
+      // Load all advanced filters from URL
+      ['type', 'year', 'priority', 'milestone', 'portfolio'].forEach(key => {
+        if (params[key]) {
+          params[key].split(',').forEach(val => advancedFilters[key].add(val));
+        }
+      });
     }
 
     function getPriorityClass(priority) { return (priority === null || priority === undefined) ? 'priority-null' : `priority-${priority}`; }
@@ -411,35 +515,147 @@
       return images[imageIndex] + '?w=400&h=300&fit=crop';
     }
 
-    function updatePriorityCounts() {
-      const counts = { 0: 0, 1: 0, 2: 0, 3: 0 };
-      properties.forEach(prop => { if (counts.hasOwnProperty(prop.priority)) counts[prop.priority]++; });
-      for (let i = 0; i <= 3; i++) {
-        const el = document.getElementById(`countPriority${i}`);
-        if (el) el.textContent = `(${counts[i]})`;
+    // Extract unique filter options from data
+    function extractFilterOptions() {
+      const types = new Set();
+      const years = new Set();
+      const priorities = new Map(); // value -> label
+      const milestones = new Map(); // current/total -> label
+      const portfolios = new Set();
+
+      properties.forEach(prop => {
+        if (prop.type) types.add(prop.type);
+        if (prop.year) years.add(prop.year);
+
+        const pKey = prop.priority !== null && prop.priority !== undefined ? String(prop.priority) : 'null';
+        const pLabel = getPriorityLabel(prop.priority, prop.priorityLabel);
+        priorities.set(pKey, pLabel);
+
+        if (prop.milestone) {
+          const mKey = `${prop.milestone.current}/${prop.milestone.total}`;
+          milestones.set(mKey, prop.milestone.label);
+        }
+
+        if (prop.portfolio) portfolios.add(prop.portfolio);
+      });
+
+      filterOptions.type = Array.from(types).sort();
+      filterOptions.year = Array.from(years).sort((a, b) => a - b);
+      filterOptions.priority = Array.from(priorities.entries()).map(([value, label]) => ({ value, label }));
+      filterOptions.milestone = Array.from(milestones.entries()).map(([value, label]) => ({ value, label }));
+      filterOptions.portfolio = Array.from(portfolios).sort();
+    }
+
+    // Check if any filters are active
+    function hasActiveFilters() {
+      return Object.values(advancedFilters).some(set => set.size > 0) || searchQuery;
+    }
+
+    // Update the filter button appearance
+    function updateFilterButtonState() {
+      const btn = document.getElementById('filterBtn');
+      if (hasActiveFilters()) {
+        btn.classList.add('has-filters');
+      } else {
+        btn.classList.remove('has-filters');
       }
     }
 
-    function updateResetButtonVisibility() {
-      const resetBtn = document.getElementById('resetFilters');
-      (activeFilters.size > 0 || searchQuery) ? resetBtn.classList.add('visible') : resetBtn.classList.remove('visible');
+    // Render active filter tags below search
+    function renderActiveFilterTags() {
+      const container = document.getElementById('activeFiltersDisplay');
+      const tags = [];
+
+      const filterLabels = {
+        type: 'Nutzung',
+        year: 'Jahr',
+        priority: 'Priorität',
+        milestone: 'Meilenstein',
+        portfolio: 'Portfolio'
+      };
+
+      Object.keys(advancedFilters).forEach(key => {
+        advancedFilters[key].forEach(value => {
+          let displayLabel = value;
+
+          // Get human-readable labels
+          if (key === 'priority') {
+            const opt = filterOptions.priority.find(o => o.value === value);
+            displayLabel = opt ? opt.label : value;
+          } else if (key === 'milestone') {
+            const opt = filterOptions.milestone.find(o => o.value === value);
+            displayLabel = opt ? `${value} ${opt.label}` : value;
+          }
+
+          tags.push(`
+            <span class="active-filter-tag" data-filter="${key}" data-value="${value}">
+              ${displayLabel}
+              <span class="material-icons-outlined">close</span>
+            </span>
+          `);
+        });
+      });
+
+      container.innerHTML = tags.join('');
+
+      // Add click handlers to remove tags
+      container.querySelectorAll('.active-filter-tag').forEach(tag => {
+        tag.addEventListener('click', () => {
+          const filterKey = tag.dataset.filter;
+          const filterValue = tag.dataset.value;
+          advancedFilters[filterKey].delete(filterValue);
+          applyFilters();
+          renderFilterModal();
+        });
+      });
     }
 
+    // Reset all filters
     function resetAllFilters() {
-      activeFilters.clear(); searchQuery = '';
+      Object.keys(advancedFilters).forEach(key => advancedFilters[key].clear());
+      searchQuery = '';
       document.getElementById('searchInput').value = '';
-      document.querySelectorAll('.filter-pill').forEach(pill => pill.classList.remove('active'));
       applyFilters();
+      renderFilterModal();
     }
 
+    // Apply all filters
     function applyFilters() {
       filteredProperties = properties.filter(prop => {
+        // Search query filter
         if (searchQuery) {
           const query = searchQuery.toLowerCase();
           const searchFields = [prop.id, prop.title, prop.type, prop.city, prop.zip, prop.address, prop.canton].map(f => (f || '').toLowerCase());
           if (!searchFields.some(field => field.includes(query))) return false;
         }
-        if (activeFilters.size > 0) return activeFilters.has(String(prop.priority));
+
+        // Type filter (OR within category)
+        if (advancedFilters.type.size > 0 && !advancedFilters.type.has(prop.type)) {
+          return false;
+        }
+
+        // Year filter (OR within category)
+        if (advancedFilters.year.size > 0 && !advancedFilters.year.has(String(prop.year))) {
+          return false;
+        }
+
+        // Priority filter (OR within category)
+        if (advancedFilters.priority.size > 0) {
+          const pKey = prop.priority !== null && prop.priority !== undefined ? String(prop.priority) : 'null';
+          if (!advancedFilters.priority.has(pKey)) return false;
+        }
+
+        // Milestone filter (OR within category)
+        if (advancedFilters.milestone.size > 0) {
+          const mKey = prop.milestone ? `${prop.milestone.current}/${prop.milestone.total}` : '';
+          if (!advancedFilters.milestone.has(mKey)) return false;
+        }
+
+        // Portfolio filter (OR within category)
+        if (advancedFilters.portfolio.size > 0 && !advancedFilters.portfolio.has(prop.portfolio)) {
+          return false;
+        }
+
         return true;
       });
 
@@ -448,10 +664,74 @@
       else if (currentView === 'map') renderMapView();
 
       updateUrlParams();
-      updateResetButtonVisibility();
+      updateFilterButtonState();
+      renderActiveFilterTags();
     }
 
-    function getDataToRender() { return (filteredProperties.length > 0 || activeFilters.size > 0 || searchQuery) ? filteredProperties : properties; }
+    // Render filter modal options
+    function renderFilterModal() {
+      // Nutzung (type)
+      const typeContainer = document.getElementById('filterNutzung');
+      typeContainer.innerHTML = filterOptions.type.map(t => `
+        <div class="filter-option ${advancedFilters.type.has(t) ? 'selected' : ''}" data-filter="type" data-value="${t}">${t}</div>
+      `).join('');
+
+      // Verkaufsjahr (year)
+      const yearContainer = document.getElementById('filterYear');
+      yearContainer.innerHTML = filterOptions.year.map(y => `
+        <div class="filter-option ${advancedFilters.year.has(String(y)) ? 'selected' : ''}" data-filter="year" data-value="${y}">${y}</div>
+      `).join('');
+
+      // Priorisierung (priority)
+      const priorityContainer = document.getElementById('filterPriority');
+      priorityContainer.innerHTML = filterOptions.priority.map(p => `
+        <div class="filter-option ${advancedFilters.priority.has(p.value) ? 'selected' : ''}" data-filter="priority" data-value="${p.value}">${p.label}</div>
+      `).join('');
+
+      // Meilenstein (milestone)
+      const milestoneContainer = document.getElementById('filterMilestone');
+      milestoneContainer.innerHTML = filterOptions.milestone.map(m => `
+        <div class="filter-option ${advancedFilters.milestone.has(m.value) ? 'selected' : ''}" data-filter="milestone" data-value="${m.value}">${m.value} ${m.label}</div>
+      `).join('');
+
+      // Portfolio
+      const portfolioContainer = document.getElementById('filterPortfolio');
+      portfolioContainer.innerHTML = filterOptions.portfolio.map(p => `
+        <div class="filter-option ${advancedFilters.portfolio.has(p) ? 'selected' : ''}" data-filter="portfolio" data-value="${p}">${p}</div>
+      `).join('');
+
+      // Add click handlers
+      document.querySelectorAll('.filter-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const filterKey = opt.dataset.filter;
+          const filterValue = opt.dataset.value;
+
+          if (advancedFilters[filterKey].has(filterValue)) {
+            advancedFilters[filterKey].delete(filterValue);
+            opt.classList.remove('selected');
+          } else {
+            advancedFilters[filterKey].add(filterValue);
+            opt.classList.add('selected');
+          }
+
+          applyFilters();
+        });
+      });
+    }
+
+    // Filter Modal open/close
+    function openFilterModal() {
+      renderFilterModal();
+      document.getElementById('filterModalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFilterModal() {
+      document.getElementById('filterModalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function getDataToRender() { return (filteredProperties.length > 0 || hasActiveFilters()) ? filteredProperties : properties; }
 
     function renderCards() {
       const grid = document.getElementById('objectGrid');
@@ -637,21 +917,31 @@
 
     function exportToExcel() { alert('Excel Export Placeholder'); }
 
-    function setupFilterPills() {
-      document.querySelectorAll('.filter-pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-          const priority = pill.dataset.priority;
-          if (activeFilters.has(priority)) {
-            activeFilters.delete(priority);
-            pill.classList.remove('active');
-          } else {
-            activeFilters.add(priority);
-            pill.classList.add('active');
-          }
-          applyFilters();
-        });
+    function setupFilterModal() {
+      // Open filter modal
+      document.getElementById('filterBtn').addEventListener('click', openFilterModal);
+
+      // Close filter modal
+      document.getElementById('filterCloseBtn').addEventListener('click', closeFilterModal);
+      document.getElementById('filterModalOverlay').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeFilterModal();
       });
-      document.getElementById('resetFilters').addEventListener('click', resetAllFilters);
+
+      // Reset filters button in modal
+      document.getElementById('filterResetBtn').addEventListener('click', () => {
+        resetAllFilters();
+      });
+
+      // Close on Escape key (handles both modals)
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (document.getElementById('filterModalOverlay').classList.contains('active')) {
+            closeFilterModal();
+          } else if (document.getElementById('modalOverlay').classList.contains('active')) {
+            closeModal();
+          }
+        }
+      });
     }
 
     function setupSearch() {
@@ -701,10 +991,10 @@
       document.body.style.overflow = '';
     }
     document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    // Note: Escape key for detail modal is handled in setupFilterModal to avoid conflicts
 
     // --- INIT ---
-    setupFilterPills();
+    setupFilterModal();
     setupSearch();
     setupViewToggle();
     loadFiltersFromUrl();
@@ -715,7 +1005,7 @@
       .then(data => {
         properties = data;
         filteredProperties = [...data];
-        updatePriorityCounts();
+        extractFilterOptions();
         applyFilters();
       })
       .catch(err => {
