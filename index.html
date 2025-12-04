@@ -244,6 +244,10 @@
     .image-tags { position: absolute; top: 12px; left: 12px; display: flex; gap: 10px; z-index: 2; }
     .year-tag { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; background-color: var(--priority-none-bg); color: var(--priority-none-text); box-shadow: var(--shadow-sm); }
 
+    /* Clickable tag styles */
+    .priority-tag[data-filter], .year-tag[data-filter] { cursor: pointer; transition: transform 0.15s, filter 0.15s; }
+    .priority-tag[data-filter]:hover, .year-tag[data-filter]:hover { transform: scale(1.05); filter: brightness(0.95); }
+
     .card-badge { position: absolute; top: 12px; left: 12px; }
     .card-content { padding: 16px; }
     .card-label { font-size: 15px; font-weight: 600; color: var(--neutral-900); margin-bottom: 4px; }
@@ -1009,6 +1013,7 @@
 
     function getPriorityClass(priority) { return (priority === null || priority === undefined) ? 'priority-null' : `priority-${priority}`; }
     function getPriorityLabel(priority, priorityLabel) { return (priority === null || priority === undefined) ? 'Keine Angabe' : priorityLabel; }
+    function getPriorityValue(priority) { return (priority === null || priority === undefined) ? 'null' : String(priority); }
     function formatCHF(value) { return (!value) ? 'CHF 0' : 'CHF ' + value.toLocaleString('de-CH').replace(/,/g, "'"); }
     function formatPriceRange(min, max) { return ((!min) && (!max)) ? 'CHF 0 - CHF 0' : formatCHF(min) + ' - ' + formatCHF(max); }
     function pricePerSqm(price, area) { return (!price || !area) ? 0 : Math.round(price / area); }
@@ -1297,8 +1302,8 @@
         <div class="card" onclick="openDetailPage('${prop.id}')">
           <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')">
             <div class="image-tags">
-              <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
-              <span class="year-tag">${prop.year}</span>
+              <span class="priority-tag ${getPriorityClass(prop.priority)}" data-filter="priority" data-value="${getPriorityValue(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+              <span class="year-tag" data-filter="year" data-value="${prop.year}">${prop.year}</span>
             </div>
           </div>
           <div class="card-content">
@@ -1338,8 +1343,8 @@
           <td><span class="material-icons-outlined object-icon">home</span></td>
           <td>${prop.econUnit}/${prop.bldgNum}</td>
           <td>${prop.type} in ${prop.zip} ${prop.city}</td>
-          <td>${prop.year}</td>
-          <td><span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span></td>
+          <td><span class="year-tag" data-filter="year" data-value="${prop.year}">${prop.year}</span></td>
+          <td><span class="priority-tag ${getPriorityClass(prop.priority)}" data-filter="priority" data-value="${getPriorityValue(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span></td>
           <td>${prop.milestone.current}/${prop.milestone.total} ${prop.milestone.label}</td>
           <td>${prop.areaGF} m²</td>
           <td>${formatPriceRange(prop.valueMin, prop.valueMax)}</td>
@@ -1357,8 +1362,8 @@
         <div class="map-sidebar-item" data-id="${prop.id}" onclick="flyToProperty('${prop.id}')">
           <div class="map-sidebar-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')">
             <div class="image-tags">
-              <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
-              <span class="year-tag">${prop.year}</span>
+              <span class="priority-tag ${getPriorityClass(prop.priority)}" data-filter="priority" data-value="${getPriorityValue(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+              <span class="year-tag" data-filter="year" data-value="${prop.year}">${prop.year}</span>
             </div>
           </div>
           <div class="map-sidebar-content">
@@ -1599,8 +1604,8 @@
           <div class="detail-gallery">
             <div class="detail-main-image" style="background-image: url('${mainImage}')">
               <div class="image-tags">
-                <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
-                <span class="year-tag">${prop.year}</span>
+                <span class="priority-tag ${getPriorityClass(prop.priority)}" data-filter="priority" data-value="${getPriorityValue(prop.priority)}" data-detail="true">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
+                <span class="year-tag" data-filter="year" data-value="${prop.year}" data-detail="true">${prop.year}</span>
               </div>
             </div>
             <div class="detail-thumb" style="background-image: url('${thumbImages[0]}')"></div>
@@ -1825,6 +1830,40 @@
     function exportToPdf() {
       alert('PDF Export - Wird später implementiert');
     }
+
+    // Handle clickable tags (event delegation)
+    function handleTagClick(event) {
+      const tag = event.target.closest('[data-filter]');
+      if (!tag) return;
+
+      // Check if this is a priority-tag or year-tag
+      if (!tag.classList.contains('priority-tag') && !tag.classList.contains('year-tag')) return;
+
+      event.stopPropagation();
+      event.preventDefault();
+
+      const filterType = tag.dataset.filter;
+      const filterValue = tag.dataset.value;
+      const isDetailView = tag.dataset.detail === 'true';
+
+      // Add the filter
+      advancedFilters[filterType].add(filterValue);
+
+      if (isDetailView) {
+        // Close detail view and go back to main with filter applied
+        closeDetailPage();
+      }
+
+      applyFilters();
+
+      // Update filter modal if it's open
+      if (document.getElementById('filterModalOverlay').classList.contains('active')) {
+        renderFilterModal();
+      }
+    }
+
+    // Set up event delegation for tag clicks
+    document.addEventListener('click', handleTagClick);
 
     // Handle browser back/forward navigation
     window.addEventListener('popstate', (event) => {
