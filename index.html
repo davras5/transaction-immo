@@ -22,7 +22,7 @@
 
     /* Header */
     .header {
-      background-color: #00838f;
+      background-color: #383E54;
       color: white;
       padding: 0 24px;
       display: flex;
@@ -44,7 +44,7 @@
       width: 32px;
       height: 32px;
       background: white;
-      color: #00838f;
+      color: #383E54;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -66,23 +66,6 @@
     .header-title-sub {
       font-size: 12px;
       opacity: 0.9;
-    }
-
-    .header-center {
-      text-align: center;
-    }
-
-    .header-badge {
-      background-color: rgba(255,255,255,0.15);
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .header-badge strong {
-      display: block;
-      font-size: 14px;
     }
 
     .header-right {
@@ -203,8 +186,8 @@
     }
 
     .view-btn.active {
-      background: white;
-      color: #00838f;
+      background: #383E54;
+      color: white;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
@@ -366,6 +349,8 @@
       font-size: 13px;
       color: #666;
       margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
     }
 
     .card-price {
@@ -378,7 +363,9 @@
     .card-price-sqm {
       font-size: 12px;
       color: #888;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
     }
 
     .card-details {
@@ -725,11 +712,6 @@
         gap: 12px;
       }
 
-      .header-center {
-        order: 3;
-        width: 100%;
-      }
-
       .modal-body {
         padding: 16px;
       }
@@ -770,12 +752,6 @@
       <div class="header-title">
         <span class="header-title-main">Verkaufsplattform</span>
         <span class="header-title-sub">Bundesamt für Bauten und Logistik</span>
-      </div>
-    </div>
-    <div class="header-center">
-      <div class="header-badge">
-        <strong>Testumgebung – Mockup</strong>
-        Inhalte sind nicht vollständig und dienen ausschliesslich Demonstrationszwecken. Die Darstellung und Funktionen können sich ändern.
       </div>
     </div>
     <div class="header-right">
@@ -849,6 +825,50 @@
     let filteredProperties = [];
     let activeFilters = new Set();
     let searchQuery = '';
+
+    // URL Parameter handling
+    function getUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        priority: params.get('priority'),
+        search: params.get('q')
+      };
+    }
+
+    function updateUrlParams() {
+      const params = new URLSearchParams();
+
+      if (activeFilters.size > 0) {
+        params.set('priority', Array.from(activeFilters).join(','));
+      }
+
+      if (searchQuery) {
+        params.set('q', searchQuery);
+      }
+
+      const newUrl = params.toString()
+        ? `${window.location.pathname}?${params.toString()}`
+        : window.location.pathname;
+
+      window.history.replaceState({}, '', newUrl);
+    }
+
+    function loadFiltersFromUrl() {
+      const params = getUrlParams();
+
+      if (params.priority) {
+        params.priority.split(',').forEach(p => {
+          activeFilters.add(p);
+          const pill = document.querySelector(`.filter-pill[data-priority="${p}"]`);
+          if (pill) pill.classList.add('active');
+        });
+      }
+
+      if (params.search) {
+        searchQuery = params.search;
+        document.getElementById('searchInput').value = searchQuery;
+      }
+    }
 
     // Format currency with Swiss formatting
     function formatCHF(value) {
@@ -962,6 +982,7 @@
       });
 
       renderCards();
+      updateUrlParams();
     }
 
     // Render cards
@@ -1223,7 +1244,8 @@
         updatePriorityCounts();
         setupFilterPills();
         setupSearch();
-        renderCards();
+        loadFiltersFromUrl();
+        applyFilters();
       })
       .catch(err => {
         console.error('Error loading data:', err);
