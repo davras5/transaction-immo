@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verkaufsplattform - Bundesamt für Bauten und Logistik</title>
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .header {
+      background-color: #00838f;
+      color: white;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .header-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title-main {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .header-title-sub {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .header-center {
+      text-align: center;
+    }
+
+    .header-badge {
+      background-color: rgba(255,255,255,0.15);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .header-badge strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary {
+      background-color: #00acc1;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #00bcd4;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: white;
+      border: 1px solid white;
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    /* Main Content */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .stats-count {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .stats-count strong {
+      color: #333;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    /* Card */
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transform: translateY(-2px);
+    }
+
+    .card-image {
+      position: relative;
+      height: 180px;
+      background-color: #e0e0e0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.95);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #666;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .card-content {
+      padding: 16px;
+    }
+
+    .card-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 4px;
+    }
+
+    .card-location {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .card-price {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 2px;
+    }
+
+    .card-price-sqm {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .card-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+
+    .card-detail-label {
+      color: #888;
+    }
+
+    .card-detail-value {
+      color: #333;
+      text-align: right;
+    }
+
+    .card-milestone {
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+    }
+
+    .milestone-bar {
+      height: 6px;
+      background: #e0e0e0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .milestone-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #00838f, #00acc1);
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+
+    .milestone-text {
+      font-size: 11px;
+      color: #666;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px;
+      z-index: 1000;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 1000px;
+      max-height: none;
+      overflow: visible;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid #eee;
+      background: #f9f9f9;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .modal-back {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .modal-back:hover {
+      background: #f5f5f5;
+    }
+
+    .modal-breadcrumb {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    /* Detail Layout */
+    .detail-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .detail-top {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-image {
+      height: 300px;
+      background: #e0e0e0;
+      border-radius: 8px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .detail-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .detail-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .detail-title span {
+      font-weight: 400;
+      color: #666;
+    }
+
+    .detail-address {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .detail-status {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 8px;
+    }
+
+    .detail-status-step {
+      font-size: 18px;
+      font-weight: 600;
+      color: #00838f;
+    }
+
+    .detail-status-info {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .detail-areas {
+      display: flex;
+      gap: 24px;
+    }
+
+    .detail-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .detail-area-icon {
+      color: #888;
+    }
+
+    .detail-area-value {
+      font-weight: 600;
+    }
+
+    .detail-area-label {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .detail-price {
+      font-size: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .detail-price-sqm {
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #eee;
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 12px 20px;
+      font-size: 14px;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .tab:hover {
+      color: #333;
+    }
+
+    .tab.active {
+      color: #00838f;
+      border-bottom-color: #00838f;
+      font-weight: 500;
+    }
+
+    /* Detail Sections */
+    .detail-section {
+      margin-bottom: 32px;
+    }
+
+    .detail-section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #333;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .detail-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .detail-item-label {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .detail-item-value {
+      font-size: 14px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    /* Market Value */
+    .market-value {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .market-value-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .market-value-display {
+      font-size: 24px;
+      font-weight: 600;
+      color: #00838f;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .market-value-bar {
+      position: relative;
+      height: 8px;
+      background: linear-gradient(90deg, #e0e0e0, #00acc1, #00838f);
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+
+    .market-value-marker {
+      position: absolute;
+      top: -4px;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border: 3px solid #00838f;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    .market-value-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* Placeholder Image */
+    .placeholder-img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 48px;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .header {
+        padding: 12px 16px;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .header-center {
+        order: 3;
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-body {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">C</div>
+      <div class="header-title">
+        <span class="header-title-main">Verkaufsplattform</span>
+        <span class="header-title-sub">Bundesamt für Bauten und Logistik</span>
+      </div>
+    </div>
+    <div class="header-center">
+      <div class="header-badge">
+        <strong>Demo-Umgebung</strong>
+        Open Source Prototyp - Keine echten Daten
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn btn-primary">Auftrag erstellen</button>
+      <button class="btn btn-outline">Login</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="stats-bar">
+      <div class="stats-count">
+        <strong id="objectCount">0</strong> Objekte
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid" id="objectGrid"></div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <button class="modal-back" onclick="closeModal()">
+          ← Zurück zur Übersicht
+        </button>
+        <span class="modal-breadcrumb" id="modalBreadcrumb"></span>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // Data will be loaded from data.json
+    let properties = [];
+
+    // Format currency
+    function formatCHF(value) {
+      if (!value || value === 0) return 'CHF 0';
+      return 'CHF ' + value.toLocaleString('de-CH');
+    }
+
+    // Format price range
+    function formatPriceRange(min, max) {
+      if ((!min || min === 0) && (!max || max === 0)) return 'CHF 0 - CHF 0';
+      return formatCHF(min) + ' - ' + formatCHF(max);
+    }
+
+    // Calculate price per sqm
+    function pricePerSqm(price, area) {
+      if (!price || !area || area === 0) return 0;
+      return Math.round(price / area);
+    }
+
+    // Get placeholder image
+    function getPlaceholderImage(type) {
+      const colors = {
+        'Einfamilienhaus': '4a9079',
+        'Sonderobjekt': '7a8b99',
+        'Technische Anlage': '8b7355'
+      };
+      const color = colors[type] || '667788';
+      return `https://placehold.co/400x300/${color}/ffffff?text=${encodeURIComponent(type)}`;
+    }
+
+    // Render cards
+    function renderCards() {
+      const grid = document.getElementById('objectGrid');
+      document.getElementById('objectCount').textContent = properties.length;
+
+      grid.innerHTML = properties.map(prop => `
+        <div class="card" onclick="openModal('${prop.id}')">
+          <div class="card-image" style="background-image: url('${getPlaceholderImage(prop.type)}')">
+            <span class="card-badge">${prop.priorityLabel} (${prop.priority})</span>
+          </div>
+          <div class="card-content">
+            <div class="card-label">${prop.id} ${prop.type}</div>
+            <div class="card-location">In ${prop.zip} ${prop.city}</div>
+            <div class="card-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
+            <div class="card-price-sqm">${formatCHF(pricePerSqm(prop.valueMean, prop.areaGF))} / m² GF</div>
+            <div class="card-details">
+              <span class="card-detail-label">Verkaufsjahr:</span>
+              <span class="card-detail-value">${prop.year}</span>
+              <span class="card-detail-label">Geschossfläche GF:</span>
+              <span class="card-detail-value">${prop.areaGF} m²</span>
+              <span class="card-detail-label">Buchwert:</span>
+              <span class="card-detail-value">${formatCHF(prop.bookValue)}</span>
+            </div>
+            <div class="card-milestone">
+              <div class="milestone-bar">
+                <div class="milestone-progress" style="width: ${(prop.milestone.current / prop.milestone.total) * 100}%"></div>
+              </div>
+              <div class="milestone-text">Meilenstein ${prop.milestone.current}/${prop.milestone.total} ${prop.milestone.label}</div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Open modal
+    function openModal(id) {
+      const prop = properties.find(p => p.id === id);
+      if (!prop) return;
+
+      document.getElementById('modalBreadcrumb').textContent = `Verkaufsjahr ${prop.year} / ${prop.id}`;
+
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div class="detail-top">
+          <div class="detail-image" style="background-image: url('${getPlaceholderImage(prop.type)}')"></div>
+          <div class="detail-summary">
+            <h1 class="detail-title">${prop.type} <span>in ${prop.zip} ${prop.city}</span></h1>
+            <p class="detail-address">${prop.address} ${prop.zip} ${prop.city}</p>
+
+            <div class="detail-status">
+              <div class="detail-status-step">${prop.milestone.current}/${prop.milestone.total} ${prop.milestone.label}</div>
+            </div>
+
+            <div class="detail-areas">
+              <div class="detail-area">
+                <span class="detail-area-icon">◫</span>
+                <span class="detail-area-value">${prop.areaGF} m²</span>
+                <span class="detail-area-label">Geschossfläche</span>
+              </div>
+              <div class="detail-area">
+                <span class="detail-area-icon">⊞</span>
+                <span class="detail-area-value">${prop.areaGSF} m²</span>
+                <span class="detail-area-label">Grundstück</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="detail-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
+              <div class="detail-price-sqm">${formatCHF(pricePerSqm(prop.valueMin, prop.areaGF))} - ${formatCHF(pricePerSqm(prop.valueMax, prop.areaGF))} / m² GF</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active">ÜBERSICHT</div>
+          <div class="tab">MEILENSTEINE</div>
+          <div class="tab">EREIGNISSE</div>
+          <div class="tab">DOKUMENTE</div>
+        </div>
+
+        <div class="detail-section">
+          <h2 class="detail-section-title">Identifikation Objekt</h2>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <div class="detail-item-label">Technischer Platz Bund</div>
+              <div class="detail-item-value">${prop.techPlatz || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Land, Region (Kanton)</div>
+              <div class="detail-item-value">Schweiz, ${prop.canton}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Objekt Bezeichnung</div>
+              <div class="detail-item-value">${prop.title}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Adresse</div>
+              <div class="detail-item-value">${prop.address} ${prop.zip} ${prop.city}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Teilportfolio Bund</div>
+              <div class="detail-item-value">${prop.portfolio || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Objektart Verkauf</div>
+              <div class="detail-item-value">${prop.type}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">BFS EGID</div>
+              <div class="detail-item-value">${prop.egid || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">BFS EGRID</div>
+              <div class="detail-item-value">${prop.egrid || 'N/A'}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h2 class="detail-section-title">Angaben zum Objekt</h2>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <div class="detail-item-label">Jahr Verkauf</div>
+              <div class="detail-item-value">${prop.year}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Grundstücksfläche GSF</div>
+              <div class="detail-item-value">${prop.areaGSF} m²</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Eigentum Art</div>
+              <div class="detail-item-value">${prop.ownership || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Geschossfläche GF</div>
+              <div class="detail-item-value">${prop.areaGF} m²</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Baujahr</div>
+              <div class="detail-item-value">${prop.buildYear || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Anzahl Geschosse</div>
+              <div class="detail-item-value">${prop.floors || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Zustand</div>
+              <div class="detail-item-value">${prop.condition || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Ausbaustandard</div>
+              <div class="detail-item-value">${prop.standard || 'N/A'}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Aktueller Buchwert</div>
+              <div class="detail-item-value">${formatCHF(prop.bookValue)}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-item-label">Anschaffungswert</div>
+              <div class="detail-item-value">${formatCHF(prop.acquisitionValue)}</div>
+            </div>
+          </div>
+        </div>
+
+        ${prop.valueMean > 0 ? `
+        <div class="detail-section">
+          <h2 class="detail-section-title">Marktwert</h2>
+          <div class="market-value">
+            <div class="market-value-display">${formatCHF(prop.valueMean)}</div>
+            <div class="market-value-bar">
+              <div class="market-value-marker" style="left: 50%"></div>
+            </div>
+            <div class="market-value-labels">
+              <span>${formatCHF(prop.valueMin)}<br>Minimum</span>
+              <span>Mittelwert</span>
+              <span>${formatCHF(prop.valueMax)}<br>Maximum</span>
+            </div>
+          </div>
+        </div>
+        ` : ''}
+
+        <div class="detail-section">
+          <h2 class="detail-section-title">Standort</h2>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <div class="detail-item-label">Koordinaten</div>
+              <div class="detail-item-value">${prop.lat?.toFixed(4)}°N ${prop.lng?.toFixed(4)}°E</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('modalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on overlay click
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+        closeModal();
+      }
+    });
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Load data and render
+    fetch('data.json')
+      .then(res => res.json())
+      .then(data => {
+        properties = data;
+        renderCards();
+      })
+      .catch(err => {
+        console.error('Error loading data:', err);
+        document.getElementById('objectGrid').innerHTML = '<p>Fehler beim Laden der Daten.</p>';
+      });
+  </script>
+</body>
+</html>
