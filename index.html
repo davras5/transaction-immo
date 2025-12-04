@@ -689,17 +689,13 @@
     .detail-map-svg svg #layer6 path.highlighted {
       fill: var(--accent-600) !important;
     }
-    /* Rivers (layer4) - very light */
-    .detail-map-svg svg #layer4 path {
-      fill: transparent !important;
-      stroke: var(--accent-100) !important;
-      stroke-width: 0.5px !important;
+    /* Rivers (layer4) - hidden */
+    .detail-map-svg svg #layer4 {
+      display: none !important;
     }
-    /* Lakes (layer3) - very light fill */
-    .detail-map-svg svg #layer3 path {
-      fill: var(--accent-100) !important;
-      stroke: var(--accent-100) !important;
-      stroke-width: 0.5px !important;
+    /* Lakes (layer3) - hidden */
+    .detail-map-svg svg #layer3 {
+      display: none !important;
     }
     /* Border (layer2) - dark outline */
     .detail-map-svg svg #layer2 path {
