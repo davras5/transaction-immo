@@ -665,20 +665,28 @@
 
     /* Switzerland Map */
     .detail-map-container {
-      background: var(--neutral-100);
+      background: var(--neutral-50);
       border-radius: 8px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-self: start;
+      width: 100%;
     }
     .detail-map-svg {
       width: 100%;
-      max-width: 400px;
     }
     .detail-map-svg svg {
       width: 100%;
       height: auto;
+    }
+    .detail-map-svg svg path {
+      fill: transparent !important;
+      stroke: var(--neutral-300) !important;
+      stroke-width: 0.8 !important;
+    }
+    .detail-map-svg svg path.highlighted {
+      fill: var(--accent-600) !important;
     }
     .detail-map-coords {
       margin-top: 12px;
@@ -1728,9 +1736,8 @@
       const svg = svgContainer.querySelector('svg');
       if (!svg) return;
 
-      // Reset all canton fills and remove previous highlights
-      svg.querySelectorAll('path[id]').forEach(path => {
-        path.style.fill = '';
+      // Remove previous highlights
+      svg.querySelectorAll('path.highlighted').forEach(path => {
         path.classList.remove('highlighted');
       });
 
@@ -1739,7 +1746,6 @@
       if (cantonId) {
         const cantonPath = svg.getElementById(cantonId);
         if (cantonPath) {
-          cantonPath.style.fill = '#0077B6';
           cantonPath.classList.add('highlighted');
         }
       }
