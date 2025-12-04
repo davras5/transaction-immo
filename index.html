@@ -8,55 +8,33 @@
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet" />
   <style>
-    /* Reset & Base */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    /* --- Reset & Base --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { height: 100%; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background-color: #f5f5f5;
-      color: #333;
-      line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+      background-color: #f5f5f5; color: #333; line-height: 1.5;
+      display: flex; flex-direction: column; height: 100%;
     }
 
-    /* Header */
+    /* --- Header --- */
     .header {
-      background-color: #383E54;
-      color: white;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-      flex-shrink: 0;
+      background-color: #383E54; color: white; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px; flex-shrink: 0;
     }
-
     .header-left { display: flex; align-items: center; gap: 16px; }
-
     .logo {
-      width: 32px; height: 32px;
-      background: white; color: #383E54;
-      border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; background: white; color: #383E54;
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
       font-size: 18px; font-weight: bold;
     }
-
     .header-title { display: flex; flex-direction: column; }
     .header-title-main { font-size: 14px; font-weight: 600; }
     .header-title-sub { font-size: 12px; opacity: 0.9; }
     .header-right { display: flex; gap: 16px; }
-
     .btn {
-      padding: 8px 16px; border-radius: 4px;
-      font-size: 14px; cursor: pointer; border: none;
+      padding: 8px 16px; border-radius: 4px; font-size: 14px; cursor: pointer; border: none;
       transition: background-color 0.2s;
     }
     .btn-primary { background-color: #097EAB; color: white; }
@@ -64,17 +42,10 @@
     .btn-outline { background-color: transparent; color: white; border: 1px solid white; }
     .btn-outline:hover { background-color: rgba(255,255,255,0.1); }
 
-    /* Main Content */
-    .main {
-      max-width: 1440px; margin: 0 auto; padding: 24px;
-      flex: 1; display: flex; flex-direction: column; min-height: 0; width: 100%;
-    }
-
-    /* Search Section */
+    /* --- Search & Filter --- */
     .search-section { background: white; padding: 16px 0; flex-shrink: 0; }
     .search-section-inner { max-width: 1440px; margin: 0 auto; padding: 0 24px; }
     .search-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
-
     .search-input-wrapper { flex: 1; position: relative; }
     .search-input-wrapper .material-icons-outlined {
       position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
@@ -86,7 +57,6 @@
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .search-input:focus { outline: none; border-color: #00838f; box-shadow: 0 0 0 3px rgba(0,131,143,0.1); }
-
     .view-toggle { display: flex; background: #f5f5f5; border-radius: 6px; padding: 4px; }
     .view-btn {
       padding: 8px 12px; border: none; background: transparent; cursor: pointer;
@@ -97,7 +67,7 @@
     .view-btn.active { background: #383E54; color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
     .view-btn-label { font-size: 13px; font-weight: 500; margin-left: 6px; }
 
-    /* Filter Pills */
+    /* --- Filter Pills --- */
     .filter-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .filter-pills { display: flex; flex-wrap: wrap; gap: 8px; }
     .filter-pill {
@@ -109,14 +79,13 @@
     .filter-pill.active { background: #e8e8e8; border-color: #ccc; color: #333; }
     .filter-pill .close-icon { display: none; font-size: 16px; margin-left: 2px; margin-right: -4px; }
     .filter-pill.active .close-icon { display: inline; }
-
     .reset-filters {
       display: none; align-items: center; justify-content: center; padding: 6px;
       border: none; background: transparent; color: #666; cursor: pointer;
       border-radius: 4px; transition: all 0.2s;
     }
-    .reset-filters:hover { background: #f0f0f0; color: #333; }
     .reset-filters.visible { display: flex; }
+    .reset-filters:hover { background: #f0f0f0; color: #333; }
     .filter-right { display: flex; align-items: center; gap: 16px; }
     .stats-count { font-size: 14px; color: #555; font-weight: 600; }
     .filter-btn {
@@ -126,13 +95,19 @@
     }
     .filter-btn:hover { border-color: #00838f; color: #00838f; }
 
-    /* Grid */
+    /* --- Main Layout --- */
+    .main {
+      max-width: 1440px; margin: 0 auto; padding: 24px;
+      flex: 1; display: flex; flex-direction: column; min-height: 0; width: 100%;
+    }
+
+    /* --- Gallery Grid --- */
     .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     @media (max-width: 1200px) { .grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 900px) { .grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
 
-    /* Card */
+    /* --- Card Style --- */
     .card {
       background: white; border-radius: 8px; overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer;
@@ -140,7 +115,15 @@
     }
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-2px); }
     .card-image { position: relative; height: 180px; background-color: #e0e0e0; background-size: cover; background-position: center; }
-    .card-badge { position: absolute; top: 12px; left: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    /* Tag Style Shared */
+    .priority-tag { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.15); }
+    .priority-0 { background-color: #ffebee; color: #c62828; }
+    .priority-1 { background-color: #e8f5e9; color: #2e7d32; }
+    .priority-2 { background-color: #e3f2fd; color: #1565c0; }
+    .priority-3 { background-color: #f5f5f5; color: #616161; }
+    .priority-null { background-color: #fafafa; color: #9e9e9e; border: 1px solid #e0e0e0; }
+    
+    .card-badge { position: absolute; top: 12px; left: 12px; }
     .card-content { padding: 16px; }
     .card-label { font-size: 15px; font-weight: 600; color: #222; margin-bottom: 4px; }
     .card-location { font-size: 13px; color: #555; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
@@ -154,124 +137,80 @@
     .milestone-progress { height: 100%; background: linear-gradient(90deg, #00838f, #00acc1); border-radius: 3px; transition: width 0.3s; }
     .milestone-text { font-size: 13px; color: #555; font-weight: 500; }
 
-    /* Modal */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.5); display: flex; align-items: flex-start; justify-content: center;
-      padding: 40px 20px; z-index: 1000; overflow-y: auto; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
-    }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal {
-      background: white; border-radius: 8px; width: 100%; max-width: 1000px;
-      transform: translateY(20px); transition: transform 0.3s;
-    }
-    .modal-overlay.active .modal { transform: translateY(0); }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 24px; border-bottom: 1px solid #eee; background: #f9f9f9; border-radius: 8px 8px 0 0;
-    }
-    .modal-back {
-      display: flex; align-items: center; gap: 8px; background: white; border: 1px solid #e0e0e0;
-      padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; color: #333;
-    }
-    .modal-back:hover { background: #f5f5f5; }
-    .modal-breadcrumb { font-size: 14px; color: #666; }
-    .modal-body { padding: 24px; }
-
-    /* Detail Styles */
-    .detail-top { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
-    .detail-image { height: 300px; background: #e0e0e0; border-radius: 8px; background-size: cover; background-position: center; }
-    .detail-summary { display: flex; flex-direction: column; gap: 16px; }
-    .detail-title { font-size: 24px; font-weight: 600; color: #333; }
-    .detail-title span { font-weight: 400; color: #666; }
-    .detail-status { display: flex; align-items: center; gap: 16px; padding: 16px; background: #f5f5f5; border-radius: 8px; }
-    .detail-areas { display: flex; gap: 24px; }
-    .detail-area { display: flex; align-items: center; gap: 8px; }
-    .tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 24px; }
-    .tab { padding: 12px 20px; font-size: 14px; color: #666; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; }
-    .tab.active { color: #00838f; border-bottom-color: #00838f; font-weight: 500; }
-    .detail-section { margin-bottom: 32px; }
-    .detail-section-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #333; }
-    .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-    .detail-item { padding: 12px 0; border-bottom: 1px solid #eee; }
-    .market-value { background: #f9f9f9; padding: 20px; border-radius: 8px; }
-    .market-value-display { font-size: 24px; font-weight: 600; color: #00838f; text-align: center; margin-bottom: 16px; }
-    .market-value-bar { position: relative; height: 8px; background: linear-gradient(90deg, #e0e0e0, #00acc1, #00838f); border-radius: 4px; margin-bottom: 8px; }
-    .market-value-marker { position: absolute; top: -4px; width: 16px; height: 16px; background: white; border: 3px solid #00838f; border-radius: 50%; transform: translateX(-50%); }
-    .market-value-labels { display: flex; justify-content: space-between; font-size: 12px; color: #888; }
-
-    /* Tags */
-    .priority-tag { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; }
-    .priority-0 { background-color: #ffebee; color: #c62828; }
-    .priority-1 { background-color: #e8f5e9; color: #2e7d32; }
-    .priority-2 { background-color: #e3f2fd; color: #1565c0; }
-    .priority-3 { background-color: #f5f5f5; color: #616161; }
-    .priority-null { background-color: #fafafa; color: #9e9e9e; border: 1px solid #e0e0e0; }
-
-    /* Views */
+    /* --- List View --- */
     .view-container { display: none; }
     .view-container.active { display: block; }
-
-    /* List View */
     .stats-boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 24px; }
     .stats-box { background: white; border-radius: 8px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .stats-box-value { font-size: 32px; font-weight: 600; color: #333; margin-bottom: 4px; }
     .stats-box-label { font-size: 13px; color: #666; }
+    .stats-box-download { display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.2s; }
+    .stats-box-download:hover { background-color: #f5f5f5; }
+    .stats-box-download .material-icons-outlined { font-size: 32px; color: #666; margin-bottom: 4px; }
     .list-table-container { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
     .list-table { width: 100%; border-collapse: collapse; }
     .list-table th { background: #f9f9f9; padding: 14px 16px; text-align: left; font-size: 13px; font-weight: 600; color: #555; border-bottom: 1px solid #e0e0e0; }
     .list-table td { padding: 14px 16px; font-size: 14px; color: #333; border-bottom: 1px solid #e0e0e0; vertical-align: middle; }
     .list-table tbody tr:hover { background-color: #f5f5f5; cursor: pointer; }
+    .object-cell { display: flex; align-items: center; gap: 12px; }
+    .object-icon { color: #888; font-size: 20px; }
+    .milestone-text-small { font-size: 12px; color: #666; }
 
-    /* ========================================= */
-    /* === MAP VIEW FIXED (CSS GRID LÖSUNG) === */
-    /* ========================================= */
+    /* --- MAP VIEW & SIDEBAR FIXES --- */
     .map-container {
-        display: none;
-        width: 100%;
-        /* Höhe füllt den Bildschirm abzüglich Header/Search */
-        height: calc(100vh - 180px);
-        min-height: 500px;
-        background: white;
-        border-radius: 8px;
-        overflow: hidden;
+        display: none; width: 100%;
+        height: calc(100vh - 180px); min-height: 500px;
+        background: white; border-radius: 8px; overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-
-    .map-container.active {
-        /* GRID statt FLEX ist hier der Schlüssel! */
-        display: grid;
-        /* Spalte 1: 280px fix, Spalte 2: Rest */
-        grid-template-columns: 280px 1fr;
-    }
+    .map-container.active { display: grid; grid-template-columns: 320px 1fr; } /* Sidebar etwas breiter: 320px */
 
     .map-sidebar {
-        /* Breite wird durch Grid-Zelle bestimmt */
-        width: 100%;
-        height: 100%; /* Füllt die Höhe der Zelle */
-        background: white;
-        overflow-y: auto;
+        width: 100%; height: 100%;
+        background: white; overflow-y: auto;
         border-right: 1px solid #e0e0e0;
         scrollbar-width: thin;
     }
 
-    .map-area {
+    /* Sidebar Item Fixes */
+    .map-sidebar-item {
+        padding: 16px;
+        border-bottom: 1px solid #e0e0e0;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        display: flex;
+        flex-direction: column; /* Stack: Image top, Text bottom */
+        gap: 12px;
+    }
+    .map-sidebar-item:hover { background-color: #f5f5f5; }
+    .map-sidebar-item.active { background-color: #e3f2fd; border-left: 4px solid #00838f; padding-left: 12px; } /* Highlight style */
+
+    .map-sidebar-image {
         position: relative;
-        /* Breite wird durch Grid-Zelle bestimmt */
         width: 100%;
-        height: 100%;
-        background-color: #e0e0e0; /* Debug-Grau */
+        height: 160px; /* Fixed Height für Bild */
+        background-color: #e0e0e0;
+        background-size: cover;
+        background-position: center;
+        border-radius: 6px;
         overflow: hidden;
     }
-
-    #map {
+    /* Tag im Bild oben links */
+    .map-sidebar-image .priority-tag {
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        width: 100%;
-        height: 100%;
+        top: 10px;
+        left: 10px;
+        z-index: 2;
     }
 
-    /* Map Marker & Popup */
+    .map-sidebar-content { display: flex; flex-direction: column; gap: 4px; }
+    .map-sidebar-title { font-size: 15px; font-weight: 600; color: #333; line-height: 1.3; }
+    .map-sidebar-price { font-size: 14px; font-weight: 600; color: #00838f; margin-top: 4px; }
+
+    .map-area { position: relative; width: 100%; height: 100%; background-color: #e0e0e0; overflow: hidden; }
+    #map { position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; }
+
+    /* Map Markers */
     .marker {
         width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
         display: flex; align-items: center; justify-content: center;
@@ -288,29 +227,47 @@
     .mapboxgl-popup-content { padding: 0; border-radius: 8px; overflow: hidden; min-width: 250px; }
     .popup-image { height: 120px; background-size: cover; background-position: center; }
     .popup-content { padding: 12px; }
+    .popup-title { font-weight: 600; margin-bottom: 4px; }
     .popup-link { display: block; text-align: center; padding: 8px 12px; background: #383E54; color: white; text-decoration: none; border-radius: 4px; margin-top: 8px; cursor: pointer; }
 
-    /* Responsive Map */
-    @media (max-width: 900px) {
-        .stats-boxes { grid-template-columns: repeat(3, 1fr); }
+    /* --- Modal --- */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); display: flex; align-items: flex-start; justify-content: center;
+      padding: 40px 20px; z-index: 1000; overflow-y: auto; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
     }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal { background: white; border-radius: 8px; width: 100%; max-width: 1000px; transform: translateY(20px); transition: transform 0.3s; }
+    .modal-overlay.active .modal { transform: translateY(0); }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid #eee; background: #f9f9f9; border-radius: 8px 8px 0 0; }
+    .modal-back { display: flex; align-items: center; gap: 8px; background: white; border: 1px solid #e0e0e0; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; color: #333; }
+    .modal-back:hover { background: #f5f5f5; }
+    .modal-body { padding: 24px; }
+    
+    /* Detail Styles omitted for brevity but present in logic */
+    .detail-top { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+    .detail-image { height: 300px; background: #e0e0e0; border-radius: 8px; background-size: cover; background-position: center; }
+    .detail-summary { display: flex; flex-direction: column; gap: 16px; }
+    .detail-title { font-size: 24px; font-weight: 600; color: #333; }
+    .detail-section-title { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #333; }
+    .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    .detail-item { padding: 12px 0; border-bottom: 1px solid #eee; }
+    .detail-item-label { font-size: 12px; color: #888; }
+    .detail-item-value { font-size: 14px; font-weight: 500; }
+
+    /* Responsive */
+    @media (max-width: 900px) { .stats-boxes { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 768px) {
         .detail-top { grid-template-columns: 1fr; }
-        
-        .map-container.active {
-            /* Mobile: Zurück zu Flex für untereinander */
-            display: flex; 
-            flex-direction: column;
-            height: auto;
-        }
-        .map-sidebar { width: 100%; max-height: 200px; border-right: none; border-bottom: 1px solid #e0e0e0; }
+        .map-container.active { display: flex; flex-direction: column; height: auto; }
+        .map-sidebar { width: 100%; max-height: 250px; border-right: none; border-bottom: 1px solid #e0e0e0; }
         .map-area { height: 400px; width: 100%; }
+        .map-sidebar-image { height: 120px; } /* Kleineres Bild auf Mobile */
     }
     @media (max-width: 640px) {
         .header { padding: 12px 16px; height: auto; flex-wrap: wrap; gap: 12px; }
         .search-row, .filter-row { flex-direction: column; align-items: stretch; }
         .grid { grid-template-columns: 1fr; }
-        .stats-boxes { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -449,7 +406,6 @@
     function getPlaceholderImage(type, id) {
       const hash = id.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a; }, 0);
       const imageIndex = Math.abs(hash) % 5;
-      // Kurze Liste für Stabilität
       const images = ['https://images.unsplash.com/photo-1568605114967-8130f3a36994', 'https://images.unsplash.com/photo-1570129477492-45c003edd2be', 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab', 'https://images.unsplash.com/photo-1581094794329-c8112a89af12'];
       return images[imageIndex] + '?w=400&h=300&fit=crop';
     }
@@ -541,17 +497,22 @@
         </tr>`).join('');
     }
 
+    // --- REPAIRED SIDEBAR RENDER FUNCTION ---
     function renderMapView() {
       const data = getDataToRender();
       document.getElementById('objectCount').textContent = data.length;
       const sidebar = document.getElementById('mapSidebar');
+      
+      // Neue Struktur: Bild-Container mit Tag (Overlay) -> Inhalt (Name + Preis)
       sidebar.innerHTML = data.map(prop => `
         <div class="map-sidebar-item" data-id="${prop.id}" onclick="flyToProperty('${prop.id}')">
-          <div class="map-sidebar-title">${prop.type} in ${prop.city}</div>
           <div class="map-sidebar-image" style="background-image: url('${getPlaceholderImage(prop.type, prop.id)}')">
-            <span class="priority-tag ${getPriorityClass(prop.priority)}">${prop.priorityLabel}</span>
+            <span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
           </div>
-          <div class="map-sidebar-price">${formatCHF(prop.valueMin)}</div>
+          <div class="map-sidebar-content">
+            <div class="map-sidebar-title">${prop.type} in ${prop.zip} ${prop.city}</div>
+            <div class="map-sidebar-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
+          </div>
         </div>`).join('');
 
       if (!map) initializeMap(data);
@@ -596,7 +557,7 @@
           el.addEventListener('click', () => {
             document.querySelectorAll('.marker').forEach(m => m.classList.remove('selected'));
             el.classList.add('selected');
-            flyToProperty(prop.id); // Sync with sidebar
+            flyToProperty(prop.id);
           });
 
           const popup = new mapboxgl.Popup({ offset: 25, maxWidth: '280px' }).setHTML(`
@@ -702,14 +663,19 @@
             <h1 class="detail-title">${prop.type} <span>in ${prop.zip} ${prop.city}</span></h1>
             <p class="detail-address">${prop.address}</p>
             <div class="detail-status"><div class="detail-status-step">${prop.milestone.current}/${prop.milestone.total} ${prop.milestone.label}</div></div>
+            <div class="detail-areas">
+                <div class="detail-area"><span class="detail-area-icon">◫</span><span class="detail-area-value">${prop.areaGF} m²</span><span class="detail-area-label">GF</span></div>
+                <div class="detail-area"><span class="detail-area-icon">⊞</span><span class="detail-area-value">${prop.areaGSF} m²</span><span class="detail-area-label">GSF</span></div>
+            </div>
             <div class="detail-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
           </div>
         </div>
         <div class="detail-section">
+          <h2 class="detail-section-title">Daten</h2>
           <div class="detail-grid">
             <div class="detail-item"><div class="detail-item-label">ID</div><div class="detail-item-value">${prop.id}</div></div>
             <div class="detail-item"><div class="detail-item-label">Kanton</div><div class="detail-item-value">${prop.canton}</div></div>
-            <div class="detail-item"><div class="detail-item-label">Fläche</div><div class="detail-item-value">${prop.areaGF} m²</div></div>
+            <div class="detail-item"><div class="detail-item-label">Buchwert</div><div class="detail-item-value">${formatCHF(prop.bookValue)}</div></div>
           </div>
         </div>`;
       document.getElementById('modalOverlay').classList.add('active');
@@ -723,16 +689,13 @@
     document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-    // --- INITIALISIERUNG ---
-    
-    // 1. Erst UI Setup (damit Buttons auch ohne Daten gehen)
+    // --- INIT ---
     setupFilterPills();
     setupSearch();
     setupViewToggle();
     loadFiltersFromUrl();
     setView(currentView);
 
-    // 2. Dann Daten laden
     fetch('data.json')
       .then(res => res.json())
       .then(data => {
