@@ -301,10 +301,10 @@
       </div>
       <div class="filter-row">
         <div class="filter-pills">
-          <button class="filter-pill" data-priority="0">Hohe Priorität (<span id="countPriority0">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
-          <button class="filter-pill" data-priority="1">Normale Priorität (<span id="countPriority1">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
-          <button class="filter-pill" data-priority="2">Geringe Priorität (<span id="countPriority2">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
-          <button class="filter-pill" data-priority="3">Keine Priorität (<span id="countPriority3">0</span>)<span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="0">Hohe Priorität <span id="countPriority0">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="1">Normale Priorität <span id="countPriority1">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="2">Geringe Priorität <span id="countPriority2">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
+          <button class="filter-pill" data-priority="3">Keine Priorität <span id="countPriority3">(0)</span><span class="material-icons-outlined close-icon">close</span></button>
           <button class="filter-pill" data-priority="null">Keine Angabe<span class="material-icons-outlined close-icon">close</span></button>
           <button class="reset-filters" id="resetFilters" title="Alle Filter zurücksetzen"><span class="material-icons-outlined">replay</span></button>
         </div>
@@ -416,7 +416,7 @@
       properties.forEach(prop => { if (counts.hasOwnProperty(prop.priority)) counts[prop.priority]++; });
       for (let i = 0; i <= 3; i++) {
         const el = document.getElementById(`countPriority${i}`);
-        if (el) el.textContent = counts[i];
+        if (el) el.textContent = `(${counts[i]})`;
       }
     }
 
