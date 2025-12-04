@@ -364,6 +364,7 @@
     let searchQuery = '';
     let currentView = 'gallery';
     let map = null;
+    let mapLoaded = false;
     let markers = [];
     let markersMap = new Map();
 
@@ -515,8 +516,13 @@
           </div>
         </div>`).join('');
 
-      if (!map) initializeMap(data);
-      else updateMapMarkers(data);
+      if (!map) {
+        initializeMap();
+      } else if (mapLoaded) {
+        updateMapMarkers(data);
+      }
+      // Wenn map existiert aber noch nicht geladen ist,
+      // werden die Marker automatisch beim 'load'-Event aktualisiert
     }
 
     function flyToProperty(id) {
@@ -535,14 +541,17 @@
       }
     }
 
-    function initializeMap(data) {
+    function initializeMap() {
       map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v11',
         center: [8.2275, 46.8182], zoom: 7
       });
       map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-      map.on('load', () => updateMapMarkers(data));
+      map.on('load', () => {
+        mapLoaded = true;
+        updateMapMarkers(getDataToRender());
+      });
     }
 
     function updateMapMarkers(data) {
