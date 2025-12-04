@@ -399,7 +399,7 @@
     }
 
     function getPriorityClass(priority) { return (priority === null || priority === undefined) ? 'priority-null' : `priority-${priority}`; }
-    function getPriorityLabel(priority, priorityLabel) { return (priority === null || priority === undefined) ? 'Keine Angabe' : `${priorityLabel} (${priority})`; }
+    function getPriorityLabel(priority, priorityLabel) { return (priority === null || priority === undefined) ? 'Keine Angabe' : priorityLabel; }
     function formatCHF(value) { return (!value) ? 'CHF 0' : 'CHF ' + value.toLocaleString('de-CH').replace(/,/g, "'"); }
     function formatPriceRange(min, max) { return ((!min) && (!max)) ? 'CHF 0 - CHF 0' : formatCHF(min) + ' - ' + formatCHF(max); }
     function pricePerSqm(price, area) { return (!price || !area) ? 0 : Math.round(price / area); }
