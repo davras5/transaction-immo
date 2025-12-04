@@ -67,16 +67,25 @@
     .view-btn.active { background: #383E54; color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
     .view-btn-label { font-size: 13px; font-weight: 500; margin-left: 6px; }
 
-    /* --- Filter Row & Active Filters --- */
+    /* --- Filter Row & Priority Pills --- */
     .filter-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .active-filters { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
-    .active-filter-tag {
-      padding: 6px 12px; border-radius: 16px; font-size: 12px;
-      background: #e8f5e9; color: #2e7d32; display: inline-flex; align-items: center; gap: 6px;
-      cursor: pointer; transition: all 0.2s;
+    .filter-pills { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; flex: 1; }
+    .filter-pill {
+      padding: 8px 16px; border: 1px solid #e0e0e0; border-radius: 20px;
+      font-size: 13px; background: white; color: #555; cursor: pointer;
+      transition: all 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;
     }
-    .active-filter-tag:hover { background: #c8e6c9; }
-    .active-filter-tag .material-icons-outlined { font-size: 14px; }
+    .filter-pill:hover { border-color: #999; background: #f5f5f5; }
+    .filter-pill.active { background: #e0f7fa; border-color: #00838f; color: #00838f; }
+    .filter-pill .close-icon { display: none; font-size: 16px; margin-left: 2px; margin-right: -4px; }
+    .filter-pill.active .close-icon { display: inline; }
+    .reset-filters {
+      display: none; align-items: center; justify-content: center; padding: 6px;
+      border: none; background: transparent; color: #666; cursor: pointer;
+      border-radius: 4px; transition: all 0.2s;
+    }
+    .reset-filters.visible { display: flex; }
+    .reset-filters:hover { background: #f0f0f0; color: #333; }
     .filter-right { display: flex; align-items: center; gap: 16px; }
     .stats-count { font-size: 14px; color: #555; font-weight: 600; }
     .filter-btn {
@@ -86,6 +95,10 @@
     }
     .filter-btn:hover { border-color: #00838f; color: #00838f; }
     .filter-btn.has-filters { border-color: #00838f; color: #00838f; background: #e0f7fa; }
+    .filter-btn .filter-count {
+      background: #00838f; color: white; font-size: 11px; font-weight: 600;
+      padding: 2px 6px; border-radius: 10px; margin-left: 2px;
+    }
 
     /* --- Filter Modal --- */
     .filter-modal-overlay {
@@ -120,10 +133,13 @@
     .filter-option {
       padding: 10px 14px; border-radius: 6px; font-size: 13px;
       background: #f9f9f9; color: #555; cursor: pointer; transition: all 0.2s;
-      border: 1px solid transparent;
+      border: 1px solid transparent; display: flex; align-items: center; justify-content: space-between;
     }
     .filter-option:hover { background: #f0f0f0; border-color: #e0e0e0; }
     .filter-option.selected { background: #e3f2fd; color: #1565c0; border-color: #90caf9; }
+    .filter-option .close-icon { display: none; font-size: 16px; opacity: 0.7; }
+    .filter-option.selected .close-icon { display: inline; }
+    .filter-option.selected:hover .close-icon { opacity: 1; }
 
     @media (max-width: 900px) {
       .filter-columns { grid-template-columns: repeat(3, 1fr); }
@@ -338,10 +354,14 @@
         </div>
       </div>
       <div class="filter-row">
-        <div class="active-filters" id="activeFiltersDisplay"></div>
+        <div class="filter-pills" id="filterPills"></div>
         <div class="filter-right">
           <div class="stats-count"><span id="objectCount">0</span> Objekte</div>
-          <button class="filter-btn" id="filterBtn"><span>Filter</span><span class="material-icons-outlined">tune</span></button>
+          <button class="filter-btn" id="filterBtn">
+            <span>Filter</span>
+            <span class="filter-count" id="filterCount" style="display: none;">0</span>
+            <span class="material-icons-outlined">tune</span>
+          </button>
         </div>
       </div>
     </div>
@@ -551,63 +571,92 @@
       return Object.values(advancedFilters).some(set => set.size > 0) || searchQuery;
     }
 
-    // Update the filter button appearance
+    // Count total active filters (excluding search)
+    function getActiveFilterCount() {
+      let count = 0;
+      Object.values(advancedFilters).forEach(set => count += set.size);
+      return count;
+    }
+
+    // Get priority counts from all properties
+    function getPriorityCounts() {
+      const counts = { '0': 0, '1': 0, '2': 0, '3': 0, 'null': 0 };
+      properties.forEach(prop => {
+        const pKey = prop.priority !== null && prop.priority !== undefined ? String(prop.priority) : 'null';
+        if (counts.hasOwnProperty(pKey)) counts[pKey]++;
+      });
+      return counts;
+    }
+
+    // Update the filter button appearance and count
     function updateFilterButtonState() {
       const btn = document.getElementById('filterBtn');
-      if (hasActiveFilters()) {
+      const countEl = document.getElementById('filterCount');
+      const count = getActiveFilterCount();
+
+      if (count > 0) {
         btn.classList.add('has-filters');
+        countEl.textContent = count;
+        countEl.style.display = 'inline';
       } else {
         btn.classList.remove('has-filters');
+        countEl.style.display = 'none';
       }
     }
 
-    // Render active filter tags below search
-    function renderActiveFilterTags() {
-      const container = document.getElementById('activeFiltersDisplay');
-      const tags = [];
+    // Render priority pills and reset button
+    function renderPriorityPills() {
+      const container = document.getElementById('filterPills');
+      const counts = getPriorityCounts();
 
-      const filterLabels = {
-        type: 'Nutzung',
-        year: 'Jahr',
-        priority: 'Priorität',
-        milestone: 'Meilenstein',
-        portfolio: 'Portfolio'
+      // Priority labels mapping
+      const priorityLabels = {
+        '0': 'Hohe Priorität',
+        '1': 'Normale Priorität',
+        '2': 'Geringe Priorität',
+        '3': 'Keine Priorität',
+        'null': 'Keine Angabe'
       };
 
-      Object.keys(advancedFilters).forEach(key => {
-        advancedFilters[key].forEach(value => {
-          let displayLabel = value;
+      // Build pills HTML
+      let html = ['0', '1', '2', '3', 'null'].map(pKey => {
+        const isActive = advancedFilters.priority.has(pKey);
+        return `
+          <button class="filter-pill ${isActive ? 'active' : ''}" data-priority="${pKey}">
+            ${priorityLabels[pKey]} (${counts[pKey]})
+            <span class="material-icons-outlined close-icon">close</span>
+          </button>
+        `;
+      }).join('');
 
-          // Get human-readable labels
-          if (key === 'priority') {
-            const opt = filterOptions.priority.find(o => o.value === value);
-            displayLabel = opt ? opt.label : value;
-          } else if (key === 'milestone') {
-            const opt = filterOptions.milestone.find(o => o.value === value);
-            displayLabel = opt ? `${value} ${opt.label}` : value;
+      // Add reset button
+      html += `
+        <button class="reset-filters ${hasActiveFilters() ? 'visible' : ''}" id="resetFilters" title="Alle Filter zurücksetzen">
+          <span class="material-icons-outlined">replay</span>
+        </button>
+      `;
+
+      container.innerHTML = html;
+
+      // Add click handlers for priority pills
+      container.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          const priority = pill.dataset.priority;
+          if (advancedFilters.priority.has(priority)) {
+            advancedFilters.priority.delete(priority);
+          } else {
+            advancedFilters.priority.add(priority);
           }
-
-          tags.push(`
-            <span class="active-filter-tag" data-filter="${key}" data-value="${value}">
-              ${displayLabel}
-              <span class="material-icons-outlined">close</span>
-            </span>
-          `);
-        });
-      });
-
-      container.innerHTML = tags.join('');
-
-      // Add click handlers to remove tags
-      container.querySelectorAll('.active-filter-tag').forEach(tag => {
-        tag.addEventListener('click', () => {
-          const filterKey = tag.dataset.filter;
-          const filterValue = tag.dataset.value;
-          advancedFilters[filterKey].delete(filterValue);
           applyFilters();
           renderFilterModal();
         });
       });
+
+      // Add click handler for reset button
+      const resetBtn = container.querySelector('#resetFilters');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', resetAllFilters);
+      }
     }
 
     // Reset all filters
@@ -616,7 +665,9 @@
       searchQuery = '';
       document.getElementById('searchInput').value = '';
       applyFilters();
-      renderFilterModal();
+      if (document.getElementById('filterModalOverlay').classList.contains('active')) {
+        renderFilterModal();
+      }
     }
 
     // Apply all filters
@@ -665,43 +716,58 @@
 
       updateUrlParams();
       updateFilterButtonState();
-      renderActiveFilterTags();
+      renderPriorityPills();
     }
 
     // Render filter modal options
     function renderFilterModal() {
+      // Helper to create option HTML with close icon
+      const createOption = (isSelected, filterKey, value, label) => `
+        <div class="filter-option ${isSelected ? 'selected' : ''}" data-filter="${filterKey}" data-value="${value}">
+          <span>${label}</span>
+          <span class="material-icons-outlined close-icon">close</span>
+        </div>
+      `;
+
       // Nutzung (type)
       const typeContainer = document.getElementById('filterNutzung');
-      typeContainer.innerHTML = filterOptions.type.map(t => `
-        <div class="filter-option ${advancedFilters.type.has(t) ? 'selected' : ''}" data-filter="type" data-value="${t}">${t}</div>
-      `).join('');
+      typeContainer.innerHTML = filterOptions.type.map(t =>
+        createOption(advancedFilters.type.has(t), 'type', t, t)
+      ).join('');
 
       // Verkaufsjahr (year)
       const yearContainer = document.getElementById('filterYear');
-      yearContainer.innerHTML = filterOptions.year.map(y => `
-        <div class="filter-option ${advancedFilters.year.has(String(y)) ? 'selected' : ''}" data-filter="year" data-value="${y}">${y}</div>
-      `).join('');
+      yearContainer.innerHTML = filterOptions.year.map(y =>
+        createOption(advancedFilters.year.has(String(y)), 'year', y, y)
+      ).join('');
 
-      // Priorisierung (priority)
+      // Priorisierung (priority) - show all 5 options
       const priorityContainer = document.getElementById('filterPriority');
-      priorityContainer.innerHTML = filterOptions.priority.map(p => `
-        <div class="filter-option ${advancedFilters.priority.has(p.value) ? 'selected' : ''}" data-filter="priority" data-value="${p.value}">${p.label}</div>
-      `).join('');
+      const priorityLabels = {
+        '0': 'Hohe Priorität',
+        '1': 'Normale Priorität',
+        '2': 'Geringe Priorität',
+        '3': 'Keine Priorität',
+        'null': 'Keine Angabe'
+      };
+      priorityContainer.innerHTML = ['0', '1', '2', '3', 'null'].map(pKey =>
+        createOption(advancedFilters.priority.has(pKey), 'priority', pKey, priorityLabels[pKey])
+      ).join('');
 
       // Meilenstein (milestone)
       const milestoneContainer = document.getElementById('filterMilestone');
-      milestoneContainer.innerHTML = filterOptions.milestone.map(m => `
-        <div class="filter-option ${advancedFilters.milestone.has(m.value) ? 'selected' : ''}" data-filter="milestone" data-value="${m.value}">${m.value} ${m.label}</div>
-      `).join('');
+      milestoneContainer.innerHTML = filterOptions.milestone.map(m =>
+        createOption(advancedFilters.milestone.has(m.value), 'milestone', m.value, `${m.value} ${m.label}`)
+      ).join('');
 
       // Portfolio
       const portfolioContainer = document.getElementById('filterPortfolio');
-      portfolioContainer.innerHTML = filterOptions.portfolio.map(p => `
-        <div class="filter-option ${advancedFilters.portfolio.has(p) ? 'selected' : ''}" data-filter="portfolio" data-value="${p}">${p}</div>
-      `).join('');
+      portfolioContainer.innerHTML = filterOptions.portfolio.map(p =>
+        createOption(advancedFilters.portfolio.has(p), 'portfolio', p, p)
+      ).join('');
 
       // Add click handlers
-      document.querySelectorAll('.filter-option').forEach(opt => {
+      document.querySelectorAll('.filter-modal .filter-option').forEach(opt => {
         opt.addEventListener('click', () => {
           const filterKey = opt.dataset.filter;
           const filterValue = opt.dataset.value;
@@ -715,6 +781,8 @@
           }
 
           applyFilters();
+          // Update close icons visibility
+          renderFilterModal();
         });
       });
     }
