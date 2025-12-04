@@ -1160,7 +1160,7 @@
         // Search query filter
         if (searchQuery) {
           const query = searchQuery.toLowerCase();
-          const searchFields = [prop.id, prop.title, prop.type, prop.city, prop.zip, prop.address, prop.canton].map(f => (f || '').toLowerCase());
+          const searchFields = [prop.econUnit, prop.bldgNum, prop.title, prop.type, prop.city, prop.zip, prop.address, prop.canton].map(f => (f || '').toString().toLowerCase());
           if (!searchFields.some(field => field.includes(query))) return false;
         }
 
@@ -1297,7 +1297,7 @@
             <span class="card-badge priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span>
           </div>
           <div class="card-content">
-            <div class="card-label">${prop.id} ${prop.type}</div>
+            <div class="card-label">${prop.econUnit}/${prop.bldgNum} ${prop.type}</div>
             <div class="card-location">In ${prop.zip} ${prop.city}</div>
             <div class="card-price">${formatPriceRange(prop.valueMin, prop.valueMax)}</div>
             <div class="card-price-sqm">${formatCHF(pricePerSqm(prop.valueMin, prop.areaGF))} - ${formatCHF(pricePerSqm(prop.valueMax, prop.areaGF))} / m² GF</div>
@@ -1332,7 +1332,7 @@
       tbody.innerHTML = data.map(prop => `
         <tr onclick="openDetailPage('${prop.id}')">
           <td><span class="material-icons-outlined object-icon">home</span></td>
-          <td>${prop.id}</td>
+          <td>${prop.econUnit}/${prop.bldgNum}</td>
           <td>${prop.type} in ${prop.zip} ${prop.city}</td>
           <td>${prop.year}</td>
           <td><span class="priority-tag ${getPriorityClass(prop.priority)}">${getPriorityLabel(prop.priority, prop.priorityLabel)}</span></td>
@@ -1570,7 +1570,7 @@
 
     async function renderDetailPage(prop) {
       // Set breadcrumb
-      document.getElementById('detailBreadcrumb').textContent = `Verkaufsjahr ${prop.year} / ${prop.id}`;
+      document.getElementById('detailBreadcrumb').textContent = `Alle Verkaufsobjekte / ${prop.year} / ${prop.econUnit} / ${prop.bldgNum}`;
 
       // Get multiple placeholder images for gallery
       const mainImage = getPlaceholderImage(prop.type, prop.id);
