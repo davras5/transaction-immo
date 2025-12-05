@@ -4,13 +4,13 @@ A web-based real estate portfolio management platform for the Swiss Federal Offi
 - Deployed: [davras5.github.io/gis-immo/](https://davras5.github.io/gis-immo/)
 
 <p align="center">
-  <img src="assets/images/Preview1.jpg" width="90%"/>
+  <img src="images/Preview1.jpg" width="90%"/>
 </p>
 
 <p align="center">
-  <img src="assets/images/Preview2.jpg" width="45%"/>
+  <img src="images/Preview2.jpg" width="45%"/>
   &nbsp;&nbsp;&nbsp;
-  <img src="assets/images/Preview3.jpg" width="45%"/>
+  <img src="images/Preview3.jpg" width="45%"/>
   &nbsp;&nbsp;&nbsp;
 </p>
 
