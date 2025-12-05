@@ -716,6 +716,308 @@
       font-size: 16px;
     }
 
+    /* --- Documents Tab Styles --- */
+    .documents-container {
+      padding: 0;
+    }
+    .documents-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .documents-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+    .documents-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .documents-table th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--neutral-500);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+    .documents-table td {
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--neutral-700);
+      border-bottom: 1px solid var(--neutral-100);
+      vertical-align: middle;
+    }
+    .documents-table tr:hover {
+      background-color: var(--neutral-50);
+    }
+    .documents-table .doc-checkbox {
+      width: 40px;
+    }
+    .documents-table .doc-checkbox input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--accent-600);
+    }
+    .documents-table .doc-name {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .doc-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .doc-icon.pdf {
+      background-color: #fee2e2;
+      color: #dc2626;
+    }
+    .doc-icon.xlsx, .doc-icon.xls {
+      background-color: #dcfce7;
+      color: #16a34a;
+    }
+    .doc-icon.png, .doc-icon.jpg, .doc-icon.jpeg, .doc-icon.gif {
+      background-color: #dbeafe;
+      color: #2563eb;
+    }
+    .doc-icon.glb, .doc-icon.gltf, .doc-icon.obj {
+      background-color: #f3e8ff;
+      color: #9333ea;
+    }
+    .doc-icon.default {
+      background-color: var(--neutral-100);
+      color: var(--neutral-500);
+    }
+    .doc-icon .material-icons-outlined {
+      font-size: 18px;
+    }
+    .doc-name-text {
+      color: var(--neutral-900);
+      font-weight: 500;
+    }
+    .doc-uploaded {
+      font-size: 13px;
+      color: var(--neutral-500);
+    }
+    .doc-actions {
+      width: 48px;
+      text-align: right;
+    }
+    .doc-action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--neutral-500);
+      border-radius: 4px;
+      transition: background-color 0.2s, color 0.2s;
+    }
+    .doc-action-btn:hover {
+      background-color: var(--neutral-100);
+      color: var(--neutral-700);
+    }
+    .doc-add-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--accent-600);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s;
+    }
+    .doc-add-btn:hover {
+      background-color: var(--accent-500);
+    }
+    .doc-add-btn .material-icons-outlined {
+      font-size: 20px;
+    }
+    .documents-empty {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--neutral-500);
+    }
+    .documents-empty .material-icons-outlined {
+      font-size: 48px;
+      margin-bottom: 16px;
+      color: var(--neutral-300);
+    }
+
+    /* --- Upload Document Dialog --- */
+    .upload-dialog-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .upload-dialog-overlay.active {
+      display: flex;
+    }
+    .upload-dialog {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .upload-dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .upload-dialog-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+    .upload-dialog-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--neutral-500);
+      padding: 4px;
+      border-radius: 4px;
+    }
+    .upload-dialog-close:hover {
+      background-color: var(--neutral-100);
+      color: var(--neutral-700);
+    }
+    .upload-step {
+      margin-bottom: 24px;
+    }
+    .upload-step-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--neutral-700);
+      margin-bottom: 12px;
+    }
+    .upload-dropzone {
+      border: 2px dashed var(--neutral-300);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .upload-dropzone:hover {
+      border-color: var(--accent-500);
+      background-color: var(--accent-100);
+    }
+    .upload-dropzone.dragover {
+      border-color: var(--accent-600);
+      background-color: var(--accent-100);
+    }
+    .upload-dropzone.has-file {
+      border-color: var(--accent-600);
+      border-style: solid;
+      background-color: var(--accent-100);
+    }
+    .upload-dropzone-text {
+      color: var(--neutral-500);
+      font-size: 14px;
+    }
+    .upload-dropzone-filename {
+      color: var(--accent-600);
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .upload-select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--neutral-300);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--neutral-700);
+      background-color: white;
+      cursor: pointer;
+    }
+    .upload-select:focus {
+      outline: none;
+      border-color: var(--accent-600);
+      box-shadow: 0 0 0 3px var(--accent-100);
+    }
+    .upload-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--neutral-300);
+      border-radius: 6px;
+      font-size: 14px;
+      color: var(--neutral-900);
+      box-sizing: border-box;
+    }
+    .upload-input:focus {
+      outline: none;
+      border-color: var(--accent-600);
+      box-shadow: 0 0 0 3px var(--accent-100);
+    }
+    .upload-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+    .upload-btn-cancel {
+      padding: 10px 20px;
+      border: 1px solid var(--neutral-300);
+      background: white;
+      color: var(--neutral-700);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .upload-btn-cancel:hover {
+      background-color: var(--neutral-100);
+    }
+    .upload-btn-submit {
+      padding: 10px 20px;
+      border: none;
+      background: var(--accent-600);
+      color: white;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .upload-btn-submit:hover {
+      background-color: var(--accent-500);
+    }
+    .upload-btn-submit:disabled {
+      background-color: var(--neutral-300);
+      cursor: not-allowed;
+    }
+
+    /* Tab content sections */
+    .tab-content-uebersicht,
+    .tab-content-dokumente {
+      display: none;
+    }
+    .tab-content-uebersicht.active,
+    .tab-content-dokumente.active {
+      display: block;
+    }
+
     /* Hide list/search when detail view is active */
     body.detail-active .search-section,
     body.detail-active .main,
@@ -1077,6 +1379,55 @@
       </button>
     </div>
     <div class="carousel-thumbnails" id="carouselThumbnails"></div>
+  </div>
+
+  <!-- Upload Document Dialog -->
+  <div class="upload-dialog-overlay" id="uploadDialogOverlay" onclick="if(event.target === this) closeUploadDialog()">
+    <div class="upload-dialog">
+      <div class="upload-dialog-header">
+        <h3 class="upload-dialog-title">Dokument hochladen</h3>
+        <button class="upload-dialog-close" onclick="closeUploadDialog()" aria-label="Schliessen">
+          <span class="material-icons-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="upload-step">
+        <div class="upload-step-label">1. Datei auswählen</div>
+        <div class="upload-dropzone" id="uploadDropzone" onclick="document.getElementById('uploadFileInput').click()">
+          <span id="uploadDropzoneText" class="upload-dropzone-text">Datei auswählen</span>
+        </div>
+        <input type="file" id="uploadFileInput" style="display: none;" onchange="handleFileSelect(this.files[0])">
+      </div>
+
+      <div class="upload-step">
+        <div class="upload-step-label">2. Art der Datei auswählen</div>
+        <select class="upload-select" id="uploadTypeSelect" onchange="validateUploadForm()">
+          <option value="">Choose an option...</option>
+          <option value="3D-Modelldaten">3D-Modelldaten</option>
+          <option value="Ansichtsplan">Ansichtsplan</option>
+          <option value="Auszug ÖREB-Kataster">Auszug ÖREB-Kataster</option>
+          <option value="Akte zu Unterhalt">Akte zu Unterhalt</option>
+          <option value="Grundrissplan">Grundrissplan</option>
+          <option value="Indikative Marktwertbewertung">Indikative Marktwertbewertung</option>
+          <option value="Kauf- Dienstbarkeitsvertrag">Kauf- Dienstbarkeitsvertrag</option>
+          <option value="Mieterdossier">Mieterdossier</option>
+          <option value="Mietvertrag">Mietvertrag</option>
+          <option value="Schliessplan / Sicherungsschein">Schliessplan / Sicherungsschein</option>
+          <option value="Serviceverträge">Serviceverträge</option>
+          <option value="Sonstiges">Sonstiges</option>
+        </select>
+      </div>
+
+      <div class="upload-step">
+        <div class="upload-step-label">3. Dateiname</div>
+        <input type="text" class="upload-input" id="uploadNameInput" placeholder="Dateiname eingeben" oninput="validateUploadForm()">
+      </div>
+
+      <div class="upload-actions">
+        <button class="upload-btn-cancel" onclick="closeUploadDialog()">Abbrechen</button>
+        <button class="upload-btn-submit" id="uploadSubmitBtn" onclick="submitDocumentUpload()" disabled>Hochladen</button>
+      </div>
+    </div>
   </div>
 
   <footer class="footer">
@@ -1886,82 +2237,100 @@
 
         <!-- Tabs -->
         <div class="detail-tabs">
-          <button class="detail-tab active">ÜBERSICHT</button>
+          <button class="detail-tab active" onclick="switchTab('ÜBERSICHT')">ÜBERSICHT</button>
           <button class="detail-tab disabled">MEILENSTEINE</button>
           <button class="detail-tab disabled">EREIGNISSE</button>
-          <button class="detail-tab disabled">DOKUMENTE</button>
+          <button class="detail-tab" onclick="switchTab('DOKUMENTE')">DOKUMENTE</button>
         </div>
 
         <!-- Tab Content -->
         <div class="detail-tab-content">
-          <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 20px; color: var(--neutral-900);">Identifikation Objekt</h2>
-          <div class="detail-data-section">
-            <div class="detail-data-column">
-              <div class="detail-data-grid">
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.techPlatz || '-'}</div>
-                  <div class="detail-data-label">Technischer Platz Bund</div>
+          <!-- ÜBERSICHT Tab -->
+          <div class="tab-content-uebersicht active">
+            <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 20px; color: var(--neutral-900);">Identifikation Objekt</h2>
+            <div class="detail-data-section">
+              <div class="detail-data-column">
+                <div class="detail-data-grid">
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.techPlatz || '-'}</div>
+                    <div class="detail-data-label">Technischer Platz Bund</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">Schweiz, ${prop.canton}</div>
+                    <div class="detail-data-label">Land, Region (Kanton)</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.city}, ${prop.address}</div>
+                    <div class="detail-data-label">Objekt Bezeichnung</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.address} ${prop.zip} ${prop.city}</div>
+                    <div class="detail-data-label">Adresse</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.portfolio || '-'}</div>
+                    <div class="detail-data-label">Teilportfolio Bund</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.type}</div>
+                    <div class="detail-data-label">Objektart Verkauf</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.egid || '-'}</div>
+                    <div class="detail-data-label">BFS EGID (nur Schweiz)</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.egrid || '-'}</div>
+                    <div class="detail-data-label">BFS EGRID (nur Schweiz)</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.ownership || '-'}</div>
+                    <div class="detail-data-label">Eigentum</div>
+                  </div>
+                  <div class="detail-data-item">
+                    <div class="detail-data-value">${prop.buildYear || '-'}</div>
+                    <div class="detail-data-label">Baujahr</div>
+                  </div>
                 </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">Schweiz, ${prop.canton}</div>
-                  <div class="detail-data-label">Land, Region (Kanton)</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.city}, ${prop.address}</div>
-                  <div class="detail-data-label">Objekt Bezeichnung</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.address} ${prop.zip} ${prop.city}</div>
-                  <div class="detail-data-label">Adresse</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.portfolio || '-'}</div>
-                  <div class="detail-data-label">Teilportfolio Bund</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.type}</div>
-                  <div class="detail-data-label">Objektart Verkauf</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.egid || '-'}</div>
-                  <div class="detail-data-label">BFS EGID (nur Schweiz)</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.egrid || '-'}</div>
-                  <div class="detail-data-label">BFS EGRID (nur Schweiz)</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.ownership || '-'}</div>
-                  <div class="detail-data-label">Eigentum</div>
-                </div>
-                <div class="detail-data-item">
-                  <div class="detail-data-value">${prop.buildYear || '-'}</div>
-                  <div class="detail-data-label">Baujahr</div>
+                <div class="detail-links">
+                  <a href="https://www.google.com/maps?q=${prop.lat},${prop.lng}" target="_blank" rel="noopener" class="detail-link">
+                    <span class="material-icons-outlined">open_in_new</span>
+                    Google Maps
+                  </a>
+                  <a href="https://map.geo.admin.ch/#/map?lang=de&swisssearch=${prop.lng},${prop.lat}&swisssearch_autoselect=true&z=12&topic=ech&layers=ch.swisstopo.amtliches-strassenverzeichnis;ch.bfs.gebaeude_wohnungs_register&bgLayer=ch.swisstopo.swissimage" target="_blank" rel="noopener" class="detail-link">
+                    <span class="material-icons-outlined">open_in_new</span>
+                    Gebäude- und Wohnungsregister
+                  </a>
+                  <a href="https://map.geo.admin.ch/#/map?lang=de&swisssearch=${prop.lng},${prop.lat}&swisssearch_autoselect=true&z=12&topic=ech&layers=ch.swisstopo-vd.stand-oerebkataster&bgLayer=ch.swisstopo.swissimage" target="_blank" rel="noopener" class="detail-link">
+                    <span class="material-icons-outlined">open_in_new</span>
+                    ÖREB-Kataster
+                  </a>
+                  <div class="detail-data-label">Verortung</div>
                 </div>
               </div>
-              <div class="detail-links">
-                <a href="https://www.google.com/maps?q=${prop.lat},${prop.lng}" target="_blank" rel="noopener" class="detail-link">
-                  <span class="material-icons-outlined">open_in_new</span>
-                  Google Maps
-                </a>
-                <a href="https://map.geo.admin.ch/#/map?lang=de&swisssearch=${prop.lng},${prop.lat}&swisssearch_autoselect=true&z=12&topic=ech&layers=ch.swisstopo.amtliches-strassenverzeichnis;ch.bfs.gebaeude_wohnungs_register&bgLayer=ch.swisstopo.swissimage" target="_blank" rel="noopener" class="detail-link">
-                  <span class="material-icons-outlined">open_in_new</span>
-                  Gebäude- und Wohnungsregister
-                </a>
-                <a href="https://map.geo.admin.ch/#/map?lang=de&swisssearch=${prop.lng},${prop.lat}&swisssearch_autoselect=true&z=12&topic=ech&layers=ch.swisstopo-vd.stand-oerebkataster&bgLayer=ch.swisstopo.swissimage" target="_blank" rel="noopener" class="detail-link">
-                  <span class="material-icons-outlined">open_in_new</span>
-                  ÖREB-Kataster
-                </a>
-                <div class="detail-data-label">Verortung</div>
+
+              <!-- Switzerland Map -->
+              <div class="detail-map-container">
+                <div class="detail-map-svg" id="detailMapSvg">${svgMapHtml}</div>
+                <div class="detail-map-coords">
+                  lat: ${prop.lat || '-'}<br>
+                  long: ${prop.lng || '-'}
+                </div>
               </div>
             </div>
+          </div>
 
-            <!-- Switzerland Map -->
-            <div class="detail-map-container">
-              <div class="detail-map-svg" id="detailMapSvg">${svgMapHtml}</div>
-              <div class="detail-map-coords">
-                lat: ${prop.lat || '-'}<br>
-                long: ${prop.lng || '-'}
+          <!-- DOKUMENTE Tab -->
+          <div class="tab-content-dokumente">
+            <div class="documents-container">
+              <div class="documents-header">
+                <h2 class="documents-title">Dokumente</h2>
+                <button class="doc-add-btn" onclick="openUploadDialog()" aria-label="Dokument hinzufügen">
+                  <span class="material-icons-outlined">add</span>
+                </button>
+              </div>
+              <div id="documentsTableContainer">
+                ${renderDocumentsTable(prop.documents)}
               </div>
             </div>
           </div>
@@ -1971,6 +2340,9 @@
       // Show detail view
       document.body.classList.add('detail-active');
       document.getElementById('detailView').classList.add('active');
+
+      // Store current property for document operations
+      currentDocumentProperty = prop;
 
       // Highlight canton and position marker on map
       setTimeout(() => {
@@ -2040,6 +2412,277 @@
     function exportToPdf() {
       window.print();
     }
+
+    // Document types for upload dialog
+    const documentTypes = [
+      '3D-Modelldaten',
+      'Ansichtsplan',
+      'Auszug ÖREB-Kataster',
+      'Akte zu Unterhalt',
+      'Grundrissplan',
+      'Indikative Marktwertbewertung',
+      'Kauf- Dienstbarkeitsvertrag',
+      'Mieterdossier',
+      'Mietvertrag',
+      'Schliessplan / Sicherungsschein',
+      'Serviceverträge',
+      'Sonstiges'
+    ];
+
+    // Current property for document operations
+    let currentDocumentProperty = null;
+
+    // Tab switching functionality
+    function switchTab(tabName) {
+      // Update tab buttons
+      const tabs = document.querySelectorAll('.detail-tab');
+      tabs.forEach(tab => {
+        if (tab.textContent === tabName) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      // Update tab content
+      const uebersichtContent = document.querySelector('.tab-content-uebersicht');
+      const dokumenteContent = document.querySelector('.tab-content-dokumente');
+
+      if (tabName === 'ÜBERSICHT') {
+        uebersichtContent.classList.add('active');
+        dokumenteContent.classList.remove('active');
+      } else if (tabName === 'DOKUMENTE') {
+        uebersichtContent.classList.remove('active');
+        dokumenteContent.classList.add('active');
+      }
+    }
+
+    // Get file extension
+    function getFileExtension(filename) {
+      return filename.split('.').pop().toLowerCase();
+    }
+
+    // Get document icon based on file extension
+    function getDocumentIcon(filename) {
+      const ext = getFileExtension(filename);
+      const iconMap = {
+        'pdf': { icon: 'picture_as_pdf', class: 'pdf' },
+        'xlsx': { icon: 'table_chart', class: 'xlsx' },
+        'xls': { icon: 'table_chart', class: 'xls' },
+        'png': { icon: 'image', class: 'png' },
+        'jpg': { icon: 'image', class: 'jpg' },
+        'jpeg': { icon: 'image', class: 'jpeg' },
+        'gif': { icon: 'image', class: 'gif' },
+        'glb': { icon: 'view_in_ar', class: 'glb' },
+        'gltf': { icon: 'view_in_ar', class: 'gltf' },
+        'obj': { icon: 'view_in_ar', class: 'obj' }
+      };
+      return iconMap[ext] || { icon: 'description', class: 'default' };
+    }
+
+    // Format document upload date
+    function formatDocumentDate(isoDate) {
+      const date = new Date(isoDate);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${day}.${month}.${year} ${hours}:${minutes}`;
+    }
+
+    // Render documents table
+    function renderDocumentsTable(documents) {
+      if (!documents || documents.length === 0) {
+        return `
+          <div class="documents-empty">
+            <span class="material-icons-outlined">folder_open</span>
+            <p>Keine Dokumente vorhanden</p>
+          </div>
+        `;
+      }
+
+      const rows = documents.map(doc => {
+        const iconInfo = getDocumentIcon(doc.name);
+        return `
+          <tr data-doc-id="${doc.id}">
+            <td class="doc-checkbox">
+              <input type="checkbox" aria-label="Dokument auswählen">
+            </td>
+            <td>
+              <div class="doc-name">
+                <div class="doc-icon ${iconInfo.class}">
+                  <span class="material-icons-outlined">${iconInfo.icon}</span>
+                </div>
+                <span class="doc-name-text">${doc.name}</span>
+              </div>
+            </td>
+            <td>${doc.type}</td>
+            <td class="doc-uploaded">${doc.uploadedBy}, ${formatDocumentDate(doc.uploadedAt)}</td>
+            <td class="doc-actions">
+              <button class="doc-action-btn" onclick="showDocumentMenu(event, '${doc.id}')" aria-label="Aktionen">
+                <span class="material-icons-outlined">more_vert</span>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      return `
+        <table class="documents-table">
+          <thead>
+            <tr>
+              <th class="doc-checkbox">
+                <input type="checkbox" aria-label="Alle Dokumente auswählen" onchange="toggleAllDocuments(this)">
+              </th>
+              <th>Bezeichnung</th>
+              <th>Dokument Art</th>
+              <th>Hochgeladen</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+      `;
+    }
+
+    // Toggle all document checkboxes
+    function toggleAllDocuments(headerCheckbox) {
+      const checkboxes = document.querySelectorAll('.documents-table tbody input[type="checkbox"]');
+      checkboxes.forEach(cb => cb.checked = headerCheckbox.checked);
+    }
+
+    // Show document context menu (placeholder - could be extended)
+    function showDocumentMenu(event, docId) {
+      event.stopPropagation();
+      // For now, just log the action - could be extended with a dropdown menu
+      console.log('Document menu clicked for:', docId);
+    }
+
+    // Open upload dialog
+    function openUploadDialog() {
+      const overlay = document.getElementById('uploadDialogOverlay');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Reset form
+      resetUploadForm();
+    }
+
+    // Close upload dialog
+    function closeUploadDialog() {
+      const overlay = document.getElementById('uploadDialogOverlay');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Reset upload form
+    function resetUploadForm() {
+      const fileInput = document.getElementById('uploadFileInput');
+      const dropzone = document.getElementById('uploadDropzone');
+      const dropzoneText = document.getElementById('uploadDropzoneText');
+      const typeSelect = document.getElementById('uploadTypeSelect');
+      const nameInput = document.getElementById('uploadNameInput');
+      const submitBtn = document.getElementById('uploadSubmitBtn');
+
+      if (fileInput) fileInput.value = '';
+      if (dropzone) dropzone.classList.remove('has-file');
+      if (dropzoneText) dropzoneText.innerHTML = '<span class="upload-dropzone-text">Datei auswählen</span>';
+      if (typeSelect) typeSelect.value = '';
+      if (nameInput) nameInput.value = '';
+      if (submitBtn) submitBtn.disabled = true;
+    }
+
+    // Handle file selection
+    function handleFileSelect(file) {
+      if (!file) return;
+
+      const dropzone = document.getElementById('uploadDropzone');
+      const dropzoneText = document.getElementById('uploadDropzoneText');
+      const nameInput = document.getElementById('uploadNameInput');
+
+      dropzone.classList.add('has-file');
+      dropzoneText.innerHTML = `<span class="upload-dropzone-filename">${file.name}</span>`;
+      nameInput.value = file.name;
+
+      validateUploadForm();
+    }
+
+    // Validate upload form
+    function validateUploadForm() {
+      const dropzone = document.getElementById('uploadDropzone');
+      const typeSelect = document.getElementById('uploadTypeSelect');
+      const nameInput = document.getElementById('uploadNameInput');
+      const submitBtn = document.getElementById('uploadSubmitBtn');
+
+      const hasFile = dropzone.classList.contains('has-file');
+      const hasType = typeSelect.value !== '';
+      const hasName = nameInput.value.trim() !== '';
+
+      submitBtn.disabled = !(hasFile && hasType && hasName);
+    }
+
+    // Submit document upload (simulated)
+    function submitDocumentUpload() {
+      const typeSelect = document.getElementById('uploadTypeSelect');
+      const nameInput = document.getElementById('uploadNameInput');
+
+      if (!currentDocumentProperty) return;
+
+      // Create new document object
+      const newDoc = {
+        id: 'doc-' + Date.now(),
+        name: nameInput.value.trim(),
+        type: typeSelect.value,
+        uploadedBy: 'user@example.com',
+        uploadedAt: new Date().toISOString()
+      };
+
+      // Add to property documents (in memory only - would need backend for persistence)
+      if (!currentDocumentProperty.documents) {
+        currentDocumentProperty.documents = [];
+      }
+      currentDocumentProperty.documents.push(newDoc);
+
+      // Re-render documents table
+      const documentsTableContainer = document.getElementById('documentsTableContainer');
+      if (documentsTableContainer) {
+        documentsTableContainer.innerHTML = renderDocumentsTable(currentDocumentProperty.documents);
+      }
+
+      // Close dialog
+      closeUploadDialog();
+    }
+
+    // Initialize drag and drop for upload dropzone
+    function initUploadDropzone() {
+      const dropzone = document.getElementById('uploadDropzone');
+      if (!dropzone) return;
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('dragover');
+      });
+
+      dropzone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          handleFileSelect(files[0]);
+        }
+      });
+    }
+
+    // Initialize dropzone when DOM is ready
+    document.addEventListener('DOMContentLoaded', initUploadDropzone);
 
     // Unified click handler (event delegation for tags, cards, rows, sidebar items)
     function handleContentClick(event) {

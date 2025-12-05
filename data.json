@@ -30,7 +30,23 @@
     "egrid": "CH579477842721",
     "techPlatz": "TN1086/3103/SB",
     "lat": 47.4372,
-    "lng": 9.64
+    "lng": 9.64,
+    "documents": [
+      {
+        "id": "doc-001",
+        "name": "Grundbuchauszug_2023.pdf",
+        "type": "Auszug ÖREB-Kataster",
+        "uploadedBy": "max.mueller@example.com",
+        "uploadedAt": "2024-01-15T10:30:00Z"
+      },
+      {
+        "id": "doc-002",
+        "name": "Gebaeudebewertung_Schopf.pdf",
+        "type": "Indikative Marktwertbewertung",
+        "uploadedBy": "anna.schmidt@example.com",
+        "uploadedAt": "2024-02-20T14:15:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000002",
@@ -63,7 +79,30 @@
     "egrid": "CH123456789012",
     "techPlatz": "TN1086/3103/WB",
     "lat": 47.3769,
-    "lng": 8.5417
+    "lng": 8.5417,
+    "documents": [
+      {
+        "id": "doc-003",
+        "name": "SAP_PM_Entity_Relationship_Diagram.png",
+        "type": "Mieterdossier",
+        "uploadedBy": "davidrasner5@gmail.com",
+        "uploadedAt": "2025-12-05T13:23:00Z"
+      },
+      {
+        "id": "doc-004",
+        "name": "Bauwerksdokumentation.xlsx",
+        "type": "Akte zu Unterhalt",
+        "uploadedBy": "davidrasner5@gmail.com",
+        "uploadedAt": "2025-12-05T13:24:00Z"
+      },
+      {
+        "id": "doc-005",
+        "name": "Grundriss_EG.pdf",
+        "type": "Grundrissplan",
+        "uploadedBy": "peter.weber@example.com",
+        "uploadedAt": "2024-03-10T09:45:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000003",
@@ -96,7 +135,16 @@
     "egrid": "CH987654321098",
     "techPlatz": "TN1086/3179/DW",
     "lat": 47.6892,
-    "lng": 8.7714
+    "lng": 8.7714,
+    "documents": [
+      {
+        "id": "doc-006",
+        "name": "Kaufvertrag_Entwurf.pdf",
+        "type": "Kauf- Dienstbarkeitsvertrag",
+        "uploadedBy": "lisa.huber@example.com",
+        "uploadedAt": "2024-04-05T11:00:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000004",
@@ -129,7 +177,30 @@
     "egrid": "CH456789012345",
     "techPlatz": "TN1086/3337/BA",
     "lat": 47.6089,
-    "lng": 8.5378
+    "lng": 8.5378,
+    "documents": [
+      {
+        "id": "doc-007",
+        "name": "Ansicht_Nord.pdf",
+        "type": "Ansichtsplan",
+        "uploadedBy": "thomas.braun@example.com",
+        "uploadedAt": "2024-05-12T16:30:00Z"
+      },
+      {
+        "id": "doc-008",
+        "name": "Mietvertrag_Wohnung1.pdf",
+        "type": "Mietvertrag",
+        "uploadedBy": "sandra.keller@example.com",
+        "uploadedAt": "2024-06-01T08:00:00Z"
+      },
+      {
+        "id": "doc-009",
+        "name": "Schliesssystem_Dokumentation.pdf",
+        "type": "Schliessplan / Sicherungsschein",
+        "uploadedBy": "markus.fischer@example.com",
+        "uploadedAt": "2024-06-15T10:20:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000005",
@@ -162,7 +233,8 @@
     "egrid": "CH456789012346",
     "techPlatz": "TN1086/3337/BB",
     "lat": 47.6091,
-    "lng": 8.5381
+    "lng": 8.5381,
+    "documents": []
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000006",
@@ -195,7 +267,23 @@
     "egrid": "CH456789012347",
     "techPlatz": "TN1086/3337/GR",
     "lat": 47.6078,
-    "lng": 8.5402
+    "lng": 8.5402,
+    "documents": [
+      {
+        "id": "doc-010",
+        "name": "3D_Modell_Anlage.glb",
+        "type": "3D-Modelldaten",
+        "uploadedBy": "tech.support@example.com",
+        "uploadedAt": "2024-07-01T14:00:00Z"
+      },
+      {
+        "id": "doc-011",
+        "name": "Servicevertrag_Wartung.pdf",
+        "type": "Serviceverträge",
+        "uploadedBy": "service@example.com",
+        "uploadedAt": "2024-07-15T09:30:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000007",
@@ -228,7 +316,37 @@
     "egrid": "CH567890123456",
     "techPlatz": "TN1086/3352/SB",
     "lat": 47.6959,
-    "lng": 8.6341
+    "lng": 8.6341,
+    "documents": [
+      {
+        "id": "doc-012",
+        "name": "Grundriss_Erdgeschoss.pdf",
+        "type": "Grundrissplan",
+        "uploadedBy": "architektur@example.com",
+        "uploadedAt": "2024-08-01T10:00:00Z"
+      },
+      {
+        "id": "doc-013",
+        "name": "Grundriss_Obergeschoss.pdf",
+        "type": "Grundrissplan",
+        "uploadedBy": "architektur@example.com",
+        "uploadedAt": "2024-08-01T10:05:00Z"
+      },
+      {
+        "id": "doc-014",
+        "name": "Bewertungsgutachten.pdf",
+        "type": "Indikative Marktwertbewertung",
+        "uploadedBy": "bewertung@example.com",
+        "uploadedAt": "2024-08-15T14:30:00Z"
+      },
+      {
+        "id": "doc-015",
+        "name": "OEREB_Auszug_2024.pdf",
+        "type": "Auszug ÖREB-Kataster",
+        "uploadedBy": "kataster@example.com",
+        "uploadedAt": "2024-09-01T08:00:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000008",
@@ -261,7 +379,23 @@
     "egrid": "CH315374047756",
     "techPlatz": "TN1086/3815/AA",
     "lat": 47.5879,
-    "lng": 8.4694
+    "lng": 8.4694,
+    "documents": [
+      {
+        "id": "doc-016",
+        "name": "Mieterdossier_komplett.pdf",
+        "type": "Mieterdossier",
+        "uploadedBy": "verwaltung@example.com",
+        "uploadedAt": "2024-09-10T11:00:00Z"
+      },
+      {
+        "id": "doc-017",
+        "name": "Unterhaltsdokumentation.xlsx",
+        "type": "Akte zu Unterhalt",
+        "uploadedBy": "facility@example.com",
+        "uploadedAt": "2024-09-20T15:45:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000009",
@@ -294,7 +428,44 @@
     "egrid": "CH789012345678",
     "techPlatz": "TN2045/4001/HP",
     "lat": 47.5535,
-    "lng": 7.5890
+    "lng": 7.5890,
+    "documents": [
+      {
+        "id": "doc-018",
+        "name": "Bewertung_Buerogebaeude.pdf",
+        "type": "Indikative Marktwertbewertung",
+        "uploadedBy": "bewertung@example.com",
+        "uploadedAt": "2024-10-01T09:00:00Z"
+      },
+      {
+        "id": "doc-019",
+        "name": "Ansicht_Alle_Seiten.pdf",
+        "type": "Ansichtsplan",
+        "uploadedBy": "architektur@example.com",
+        "uploadedAt": "2024-10-05T14:00:00Z"
+      },
+      {
+        "id": "doc-020",
+        "name": "Grundrisse_Alle_Etagen.pdf",
+        "type": "Grundrissplan",
+        "uploadedBy": "architektur@example.com",
+        "uploadedAt": "2024-10-05T14:15:00Z"
+      },
+      {
+        "id": "doc-021",
+        "name": "Mietvertraege_Uebersicht.pdf",
+        "type": "Mietvertrag",
+        "uploadedBy": "verwaltung@example.com",
+        "uploadedAt": "2024-10-10T10:30:00Z"
+      },
+      {
+        "id": "doc-022",
+        "name": "Sonstiges_Notizen.pdf",
+        "type": "Sonstiges",
+        "uploadedBy": "admin@example.com",
+        "uploadedAt": "2024-10-15T16:00:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000010",
@@ -327,7 +498,30 @@
     "egrid": "CH890123456789",
     "techPlatz": "TN2046/4002/HP",
     "lat": 46.9480,
-    "lng": 7.4474
+    "lng": 7.4474,
+    "documents": [
+      {
+        "id": "doc-023",
+        "name": "Kaufvertrag_Entwurf_v2.pdf",
+        "type": "Kauf- Dienstbarkeitsvertrag",
+        "uploadedBy": "notar@example.com",
+        "uploadedAt": "2024-11-01T11:00:00Z"
+      },
+      {
+        "id": "doc-024",
+        "name": "Mieterdossier_MFH.pdf",
+        "type": "Mieterdossier",
+        "uploadedBy": "verwaltung@example.com",
+        "uploadedAt": "2024-11-05T09:30:00Z"
+      },
+      {
+        "id": "doc-025",
+        "name": "Servicevertraege_Heizung.pdf",
+        "type": "Serviceverträge",
+        "uploadedBy": "service@example.com",
+        "uploadedAt": "2024-11-10T13:45:00Z"
+      }
+    ]
   },
   {
     "id": "a1b2c3d4-1001-4000-8000-000000000011",
@@ -360,6 +554,22 @@
     "egrid": "CH901234567890",
     "techPlatz": "TN2047/4003/HP",
     "lat": 47.0502,
-    "lng": 8.3093
+    "lng": 8.3093,
+    "documents": [
+      {
+        "id": "doc-026",
+        "name": "3D_Scan_Gebaeude.glb",
+        "type": "3D-Modelldaten",
+        "uploadedBy": "scan3d@example.com",
+        "uploadedAt": "2024-11-15T10:00:00Z"
+      },
+      {
+        "id": "doc-027",
+        "name": "OEREB_Kataster_Luzern.pdf",
+        "type": "Auszug ÖREB-Kataster",
+        "uploadedBy": "kataster@example.com",
+        "uploadedAt": "2024-11-20T14:00:00Z"
+      }
+    ]
   }
 ]
