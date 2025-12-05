@@ -2160,10 +2160,18 @@
       gap: 34px;
       margin: 34px 0;
     }
+    .sales-form-input-grid.two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 48px;
+    }
     .sales-form-input-group {
       display: flex;
       flex-direction: column;
       max-width: 480px;
+    }
+    .sales-form-input-grid.two-column .sales-form-input-group {
+      max-width: none;
     }
     .sales-form-input-group.full-width {
       grid-column: 1 / -1;
@@ -5166,7 +5174,7 @@
           </p>
         </div>
         <div class="sales-form-step-content">
-          <div class="sales-form-input-grid">
+          <div class="sales-form-input-grid two-column">
             <div class="sales-form-input-group">
               <label class="sales-form-label">Anzahl Geschosse</label>
               <input type="number" class="sales-form-input" id="floorsInput"
