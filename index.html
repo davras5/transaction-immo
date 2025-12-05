@@ -716,6 +716,205 @@
       font-size: 16px;
     }
 
+    /* Section Separator */
+    .detail-section-separator {
+      border-top: 1px solid var(--neutral-200);
+      margin: 40px 0;
+    }
+
+    /* Angaben zum Objekt Section */
+    .detail-object-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .detail-object-left {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 48px;
+      align-content: start;
+    }
+    .detail-object-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .detail-geo-map {
+      width: 100%;
+      height: 300px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--neutral-200);
+    }
+    .detail-geo-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .detail-geo-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+    .detail-geo-coords {
+      color: var(--neutral-700);
+    }
+    .detail-geo-address {
+      color: var(--neutral-500);
+    }
+    .detail-route-link {
+      color: var(--accent-600);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+    }
+    .detail-route-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Marktwert & Lage Container */
+    .detail-value-location {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    /* Marktwert Section */
+    .detail-value-section h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--neutral-900);
+    }
+    .detail-value-chart {
+      padding: 20px 0;
+    }
+    .detail-value-main {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--neutral-900);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .detail-value-bar-container {
+      position: relative;
+      margin: 0 auto;
+      max-width: 400px;
+    }
+    .detail-value-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .detail-value-labels span {
+      font-size: 14px;
+      color: var(--neutral-500);
+    }
+    .detail-value-bar {
+      height: 16px;
+      background: linear-gradient(to right, #E3F2FD 0%, #1976D2 50%, #0D47A1 100%);
+      border-radius: 8px;
+      position: relative;
+    }
+    .detail-value-marker {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 24px;
+      background: var(--neutral-900);
+      transform: translateX(-50%);
+    }
+    .detail-value-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    .detail-value-scale span {
+      font-size: 12px;
+      color: var(--neutral-500);
+    }
+
+    /* Lage Section */
+    .detail-location-section h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--neutral-900);
+    }
+    .detail-location-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .detail-location-item {
+      display: grid;
+      grid-template-columns: 180px 40px 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+    .detail-location-label {
+      font-size: 14px;
+      color: var(--neutral-700);
+    }
+    .detail-location-value {
+      font-size: 14px;
+      color: var(--neutral-500);
+      text-align: center;
+    }
+    .detail-location-bar-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .detail-location-bar {
+      height: 8px;
+      background: var(--neutral-200);
+      border-radius: 4px;
+      overflow: hidden;
+      flex: 1;
+    }
+    .detail-location-bar-fill {
+      height: 100%;
+      background: var(--accent-600);
+      border-radius: 4px;
+    }
+    .detail-location-stars {
+      display: flex;
+      gap: 4px;
+    }
+    .detail-location-star {
+      color: var(--neutral-300);
+      font-size: 18px;
+    }
+    .detail-location-star.filled {
+      color: #FFC107;
+    }
+
+    @media (max-width: 1200px) {
+      .detail-object-section,
+      .detail-value-location {
+        grid-template-columns: 1fr;
+      }
+      .detail-object-right {
+        max-width: 500px;
+      }
+    }
+    @media (max-width: 768px) {
+      .detail-object-left {
+        grid-template-columns: 1fr;
+      }
+      .detail-location-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+      .detail-location-value {
+        text-align: left;
+      }
+    }
+
     /* Hide list/search when detail view is active */
     body.detail-active .search-section,
     body.detail-active .main,
@@ -1168,8 +1367,18 @@
     function getPriorityLabel(priority, priorityLabel) { return (priority === null || priority === undefined) ? 'Keine Angabe' : priorityLabel; }
     function getPriorityValue(priority) { return (priority === null || priority === undefined) ? 'null' : String(priority); }
     function formatCHF(value) { return (!value) ? 'CHF 0' : 'CHF ' + value.toLocaleString('de-CH').replace(/,/g, "'"); }
+    function formatNumber(value) { return (!value && value !== 0) ? '0' : value.toLocaleString('de-CH').replace(/,/g, "'"); }
     function formatPriceRange(min, max) { return ((!min) && (!max)) ? 'CHF 0 - CHF 0' : formatCHF(min) + ' - ' + formatCHF(max); }
     function pricePerSqm(price, area) { return (!price || !area) ? 0 : Math.round(price / area); }
+    function formatCoord(value, dir) {
+      if (!value) return '-';
+      const abs = Math.abs(value);
+      const deg = Math.floor(abs);
+      const minFloat = (abs - deg) * 60;
+      const min = Math.floor(minFloat);
+      const sec = ((minFloat - min) * 60).toFixed(1);
+      return `${deg}°${min}'${sec}"${dir}`;
+    }
 
     function getPlaceholderImage(type, id) {
       const idStr = String(id);
@@ -1962,6 +2171,193 @@
               <div class="detail-map-coords">
                 lat: ${prop.lat || '-'}<br>
                 long: ${prop.lng || '-'}
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Separator -->
+          <div class="detail-section-separator"></div>
+
+          <!-- Angaben zum Objekt -->
+          <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 20px; color: var(--neutral-900);">Angaben zum Objekt</h2>
+          <div class="detail-object-section">
+            <div class="detail-object-left">
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.year || '-'}</div>
+                <div class="detail-data-label">Jahr Verkauf</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.areaGSF ? prop.areaGSF + ' m²' : '-'}</div>
+                <div class="detail-data-label">Grundstücksfläche GSF</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.ownership || '-'}</div>
+                <div class="detail-data-label">Eigentum Art</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.areaGF ? prop.areaGF + ' m²' : '-'}</div>
+                <div class="detail-data-label">Geschossfläche GF</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.buildYear || '-'}</div>
+                <div class="detail-data-label">Baujahr</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.floors || '-'}</div>
+                <div class="detail-data-label">Anzahl Geschosse</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.condition || '-'}</div>
+                <div class="detail-data-label">Zustand</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.livingArea ? prop.livingArea + ' m²' : 'Null'}</div>
+                <div class="detail-data-label">Wohnfläche</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.standard || '-'}</div>
+                <div class="detail-data-label">Ausbaustandard</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.apartments !== null ? prop.apartments : 'Null'}</div>
+                <div class="detail-data-label">Anzahl Wohnungen</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.isHeated !== null ? (prop.isHeated ? 'Ja' : 'Nein') : 'Null'}</div>
+                <div class="detail-data-label">Objekt ist beheizt</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.rooms !== null ? prop.rooms : 'Null'}</div>
+                <div class="detail-data-label">Anzahl Zimmer</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${formatCHF(prop.bookValue)}</div>
+                <div class="detail-data-label">Aktueller Buchwert</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.parkingSpaces !== null ? prop.parkingSpaces : 'Null'}</div>
+                <div class="detail-data-label">Anzahl Parkplätze</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${formatCHF(prop.acquisitionValue)}</div>
+                <div class="detail-data-label">Anschaffungswert</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">&nbsp;</div>
+                <div class="detail-data-label">&nbsp;</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.hasBuildingRights !== null ? (prop.hasBuildingRights ? 'Ja' : 'Nein') : 'Null'}</div>
+                <div class="detail-data-label">Baurecht vorhanden?</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">&nbsp;</div>
+                <div class="detail-data-label">&nbsp;</div>
+              </div>
+              <div class="detail-data-item">
+                <div class="detail-data-value">${prop.buildingRightsFee !== null ? 'CHF ' + formatNumber(prop.buildingRightsFee) : 'CHF Null'}</div>
+                <div class="detail-data-label">Baurechtszins</div>
+              </div>
+            </div>
+            <div class="detail-object-right">
+              <div class="detail-geo-map">
+                <iframe
+                  src="https://map.geo.admin.ch/embed.html?lang=de&topic=ech&bgLayer=ch.swisstopo.swissimage&lon=${prop.lng}&lat=${prop.lat}&zoom=9&crosshair=marker"
+                  allowfullscreen="true"
+                  loading="lazy">
+                </iframe>
+              </div>
+              <div class="detail-geo-info">
+                <span class="detail-geo-coords">${formatCoord(prop.lat, 'N')} ${formatCoord(prop.lng, 'E')}</span>
+                <span class="detail-geo-address">${prop.address} ${prop.city}</span>
+              </div>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=${prop.lat},${prop.lng}" target="_blank" rel="noopener" class="detail-route-link">
+                <span class="material-icons-outlined">directions</span>
+                Routenplaner
+              </a>
+            </div>
+          </div>
+
+          <!-- Section Separator -->
+          <div class="detail-section-separator"></div>
+
+          <!-- Marktwert & Lage -->
+          <div class="detail-value-location">
+            <!-- Marktwert -->
+            <div class="detail-value-section">
+              <h2>Marktwert</h2>
+              <div class="detail-value-chart">
+                <div class="detail-value-main">${formatCHF(prop.valueMean)}</div>
+                <div class="detail-value-bar-container">
+                  <div class="detail-value-labels">
+                    <span>${formatCHF(prop.valueMin)}</span>
+                    <span>${formatCHF(prop.valueMax)}</span>
+                  </div>
+                  <div class="detail-value-bar">
+                    ${prop.valueMax > prop.valueMin ?
+                      \`<div class="detail-value-marker" style="left: \${((prop.valueMean - prop.valueMin) / (prop.valueMax - prop.valueMin)) * 100}%"></div>\`
+                      : ''}
+                  </div>
+                  <div class="detail-value-scale">
+                    <span>Minimum</span>
+                    <span>Mittelwert</span>
+                    <span>Maximum</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lage -->
+            <div class="detail-location-section">
+              <h2>Lage</h2>
+              <div class="detail-location-grid">
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Gesamthaft</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.overall : 'Null'}</span>
+                  <div class="detail-location-stars">
+                    ${[1,2,3,4,5].map(i => \`<span class="material-icons-outlined detail-location-star \${prop.locationRatings && i <= prop.locationRatings.overall ? 'filled' : ''}">star</span>\`).join('')}
+                  </div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Besonnung</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.sunExposure : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.sunExposure : 10}%"></div></div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Sicht</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.view : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.view : 10}%"></div></div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Image des Quartiers</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.neighborhoodImage : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.neighborhoodImage : 10}%"></div></div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Dienstleistungen</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.services : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.services : 10}%"></div></div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Freizeit & Erholung</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.leisureRecreation : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.leisureRecreation : 10}%"></div></div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Öffentlicher Verkehr</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.publicTransport : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.publicTransport : 10}%"></div></div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Strassenanbindung</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.roadConnection : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.roadConnection : 10}%"></div></div>
+                </div>
+                <div class="detail-location-item">
+                  <span class="detail-location-label">Lärmbelastung</span>
+                  <span class="detail-location-value">${prop.locationRatings ? prop.locationRatings.noisePollution : 'Null'}</span>
+                  <div class="detail-location-bar"><div class="detail-location-bar-fill" style="width: ${prop.locationRatings ? prop.locationRatings.noisePollution : 10}%"></div></div>
+                </div>
               </div>
             </div>
           </div>
