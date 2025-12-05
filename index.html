@@ -1647,6 +1647,11 @@
     .sales-form-header {
       background: var(--neutral-50);
       border-bottom: 1px solid var(--neutral-200);
+    }
+    .sales-form-header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
       padding: 16px 32px;
       display: flex;
       justify-content: space-between;
@@ -1674,7 +1679,6 @@
 
     .sales-form-container {
       display: flex;
-      flex: 1;
       max-width: 1400px;
       margin: 0 auto;
       width: 100%;
@@ -2028,11 +2032,11 @@
     }
     .sales-form-map-container iframe {
       width: 100%;
-      height: 300px;
+      height: 420px;
       border: none;
     }
     .sales-form-map-placeholder {
-      height: 300px;
+      height: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -2120,7 +2124,7 @@
     /* Input Grid */
     .sales-form-input-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
     .sales-form-input-group {
@@ -2661,8 +2665,10 @@
   <!-- Sales Form View -->
   <div class="sales-form-view" id="salesFormView">
     <div class="sales-form-header">
-      <h1 class="sales-form-title">Auftrag erstellen</h1>
-      <button class="sales-form-cancel-btn" onclick="closeSalesForm()">Abbrechen</button>
+      <div class="sales-form-header-inner">
+        <h1 class="sales-form-title">Auftrag erstellen</h1>
+        <button class="sales-form-cancel-btn" onclick="closeSalesForm()">Abbrechen</button>
+      </div>
     </div>
     <div class="sales-form-container">
       <aside class="sales-form-sidebar">
