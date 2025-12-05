@@ -2369,94 +2369,92 @@
 
     /* Rating Slider */
     .sales-form-rating-section {
-      margin-top: 24px;
-      padding-top: 24px;
+      margin-top: 34px;
+      padding-top: 34px;
       border-top: 1px solid var(--neutral-200);
     }
-    .sales-form-rating-title {
-      font-size: 16px;
+    .sales-form-rating {
+      margin-bottom: 24px;
+    }
+    .sales-form-rating-label {
+      font-size: 14px;
       font-weight: 600;
       color: var(--neutral-900);
       margin-bottom: 24px;
     }
-    .sales-form-rating {
-      margin-bottom: 32px;
-    }
-    .sales-form-rating-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--neutral-700);
-      margin-bottom: 16px;
-    }
-    .sales-form-rating-slider-container {
+    .sales-form-rating-icons {
       display: flex;
-      align-items: center;
-      gap: 16px;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 8px;
+      padding: 0 4px;
     }
     .sales-form-rating-icon {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      min-width: 80px;
+      width: 80px;
+    }
+    .sales-form-rating-icon img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
     }
     .sales-form-rating-icon .material-icons-outlined {
-      font-size: 32px;
-      color: var(--neutral-400);
-    }
-    .sales-form-rating-icon span:last-child {
-      font-size: 12px;
+      font-size: 40px;
       color: var(--neutral-500);
-      text-align: center;
     }
-    .sales-form-rating-slider-wrapper {
-      flex: 1;
+    .sales-form-rating-track {
       position: relative;
-      padding: 0 8px;
-    }
-    .sales-form-rating-slider {
-      width: 100%;
-      height: 6px;
-      -webkit-appearance: none;
-      appearance: none;
-      background: var(--neutral-200);
-      border-radius: 3px;
-      outline: none;
-    }
-    .sales-form-rating-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 20px;
       height: 20px;
-      border-radius: 50%;
-      background: var(--accent-500);
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
     }
-    .sales-form-rating-slider::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent-500);
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    .sales-form-rating-track-line {
+      position: absolute;
+      left: 44px;
+      right: 44px;
+      height: 2px;
+      background: var(--neutral-300);
     }
     .sales-form-rating-dots {
-      position: absolute;
-      top: 50%;
-      left: 8px;
-      right: 8px;
-      transform: translateY(-50%);
+      position: relative;
+      width: 100%;
       display: flex;
       justify-content: space-between;
-      pointer-events: none;
+      z-index: 1;
     }
     .sales-form-rating-dot {
-      width: 8px;
-      height: 8px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: var(--neutral-300);
+      background: white;
+      border: 2px solid var(--neutral-300);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sales-form-rating-dot:hover {
+      border-color: var(--neutral-400);
+    }
+    .sales-form-rating-dot.active {
+      background: var(--accent-500);
+      border-color: var(--accent-500);
+    }
+    .sales-form-rating-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding: 0 4px;
+    }
+    .sales-form-rating-label-item {
+      width: 80px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--neutral-600);
+    }
+    .sales-form-rating-slider {
+      display: none;
     }
 
     /* Summary Table */
@@ -5315,57 +5313,73 @@
           <div class="sales-form-rating-section">
             <div class="sales-form-rating">
               <div class="sales-form-rating-label">Aktueller Zustand</div>
-              <div class="sales-form-rating-slider-container">
+              <div class="sales-form-rating-icons">
                 <div class="sales-form-rating-icon">
-                  <span class="material-icons-outlined">construction</span>
-                  <span>Sanierungsreif (1)</span>
+                  <span class="material-icons-outlined">domain_disabled</span>
                 </div>
-                <div class="sales-form-rating-slider-wrapper">
-                  <input type="range" class="sales-form-rating-slider" id="conditionSlider"
-                         min="1" max="5" step="1" value="${salesFormData.condition}">
-                  <div class="sales-form-rating-dots">
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                  </div>
-                </div>
+                <div class="sales-form-rating-icon"></div>
                 <div class="sales-form-rating-icon">
-                  <span class="material-icons-outlined">auto_awesome</span>
-                  <span>Neuwertig (5)</span>
+                  <span class="material-icons-outlined">family_restroom</span>
+                </div>
+                <div class="sales-form-rating-icon"></div>
+                <div class="sales-form-rating-icon">
+                  <span class="material-icons-outlined">real_estate_agent</span>
                 </div>
               </div>
+              <div class="sales-form-rating-track">
+                <div class="sales-form-rating-track-line"></div>
+                <div class="sales-form-rating-dots" id="conditionDots">
+                  ${[1,2,3,4,5].map(val => `
+                    <span class="sales-form-rating-dot ${salesFormData.condition === val ? 'active' : ''}" data-value="${val}" data-target="condition"></span>
+                  `).join('')}
+                </div>
+              </div>
+              <div class="sales-form-rating-labels">
+                <div class="sales-form-rating-label-item">Sanierungsreif (1)</div>
+                <div class="sales-form-rating-label-item"></div>
+                <div class="sales-form-rating-label-item">Intakt (3)</div>
+                <div class="sales-form-rating-label-item"></div>
+                <div class="sales-form-rating-label-item">Neuwertig (5)</div>
+              </div>
+              <input type="hidden" id="conditionSlider" value="${salesFormData.condition}">
             </div>
 
-            <div class="sales-form-info-box" style="margin-bottom: 24px;">
+            <div class="sales-form-info-box">
               <span class="material-icons-outlined">lightbulb</span>
               <p>In der Schweiz befinden sich die meisten Immobilien in gutem Zustand. Als sanierungsbedürftig gelten solche, die erhebliche Nutzungseinschränkungen aufzeigen. Immobilien gelten als neuwertig, wenn sie nicht älter als 5 Jahre sind.</p>
             </div>
 
-            <div class="sales-form-rating">
+            <div class="sales-form-rating" style="margin-top: 34px;">
               <div class="sales-form-rating-label">Ausbaustandard</div>
-              <div class="sales-form-rating-slider-container">
+              <div class="sales-form-rating-icons">
                 <div class="sales-form-rating-icon">
-                  <span class="material-icons-outlined">weekend</span>
-                  <span>Einfach (1)</span>
+                  <span class="material-icons-outlined">cabin</span>
                 </div>
-                <div class="sales-form-rating-slider-wrapper">
-                  <input type="range" class="sales-form-rating-slider" id="standardSlider"
-                         min="1" max="5" step="1" value="${salesFormData.standard}">
-                  <div class="sales-form-rating-dots">
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                    <span class="sales-form-rating-dot"></span>
-                  </div>
-                </div>
+                <div class="sales-form-rating-icon"></div>
                 <div class="sales-form-rating-icon">
-                  <span class="material-icons-outlined">star</span>
-                  <span>Luxuriös (5)</span>
+                  <span class="material-icons-outlined">home</span>
+                </div>
+                <div class="sales-form-rating-icon"></div>
+                <div class="sales-form-rating-icon">
+                  <span class="material-icons-outlined">villa</span>
                 </div>
               </div>
+              <div class="sales-form-rating-track">
+                <div class="sales-form-rating-track-line"></div>
+                <div class="sales-form-rating-dots" id="standardDots">
+                  ${[1,2,3,4,5].map(val => `
+                    <span class="sales-form-rating-dot ${salesFormData.standard === val ? 'active' : ''}" data-value="${val}" data-target="standard"></span>
+                  `).join('')}
+                </div>
+              </div>
+              <div class="sales-form-rating-labels">
+                <div class="sales-form-rating-label-item">Einfach (1)</div>
+                <div class="sales-form-rating-label-item"></div>
+                <div class="sales-form-rating-label-item">Üblich (3)</div>
+                <div class="sales-form-rating-label-item"></div>
+                <div class="sales-form-rating-label-item">Luxuriös (5)</div>
+              </div>
+              <input type="hidden" id="standardSlider" value="${salesFormData.standard}">
             </div>
 
             <div class="sales-form-info-box">
@@ -5425,20 +5439,25 @@
         });
       });
 
-      // Sliders
-      const conditionSlider = document.getElementById('conditionSlider');
-      if (conditionSlider) {
-        conditionSlider.addEventListener('input', (e) => {
-          salesFormData.condition = parseInt(e.target.value);
-        });
-      }
+      // Rating dots
+      document.querySelectorAll('.sales-form-rating-dot').forEach(dot => {
+        dot.addEventListener('click', (e) => {
+          const value = parseInt(e.target.dataset.value);
+          const target = e.target.dataset.target;
 
-      const standardSlider = document.getElementById('standardSlider');
-      if (standardSlider) {
-        standardSlider.addEventListener('input', (e) => {
-          salesFormData.standard = parseInt(e.target.value);
+          if (target === 'condition') {
+            salesFormData.condition = value;
+            document.querySelectorAll('#conditionDots .sales-form-rating-dot').forEach(d => {
+              d.classList.toggle('active', parseInt(d.dataset.value) === value);
+            });
+          } else if (target === 'standard') {
+            salesFormData.standard = value;
+            document.querySelectorAll('#standardDots .sales-form-rating-dot').forEach(d => {
+              d.classList.toggle('active', parseInt(d.dataset.value) === value);
+            });
+          }
         });
-      }
+      });
     }
 
     function updateAreaPercentages() {
