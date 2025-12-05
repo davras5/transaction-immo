@@ -1140,34 +1140,93 @@
     /* --- Documents Tab Styles --- */
     .documents-container {
       padding: 0;
+      background: var(--neutral-50);
+      border: 1px solid var(--neutral-200);
+      border-radius: 8px;
+      overflow: hidden;
     }
     .documents-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--neutral-200);
+      background: var(--neutral-50);
     }
     .documents-title {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--neutral-900);
       margin: 0;
     }
-    .doc-add-btn {
-      width: 36px;
-      height: 36px;
-      border: none;
-      background: var(--accent-600);
-      color: var(--neutral-50);
-      border-radius: 50%;
-      cursor: pointer;
+    .documents-toolbar {
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--neutral-200);
+      background: var(--neutral-50);
+      gap: 16px;
     }
-    .doc-add-btn:hover {
-      background: var(--accent-500);
+    .documents-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid var(--neutral-300);
+      border-radius: 6px;
+      padding: 8px 12px;
+      min-width: 240px;
+    }
+    .documents-search .material-icons-outlined {
+      color: var(--neutral-400);
+      font-size: 20px;
+    }
+    .documents-search input {
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: var(--neutral-700);
+      background: transparent;
+      width: 100%;
+    }
+    .documents-search input::placeholder {
+      color: var(--neutral-400);
+    }
+    .documents-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .doc-toolbar-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 1px solid var(--neutral-300);
+      background: white;
+      color: var(--neutral-700);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .doc-toolbar-btn:hover {
+      background: var(--neutral-100);
+      border-color: var(--neutral-400);
+    }
+    .doc-toolbar-btn .material-icons-outlined {
+      font-size: 18px;
+    }
+    .doc-toolbar-btn-primary {
+      background: var(--accent-600);
+      color: white;
+      border-color: var(--accent-600);
+    }
+    .doc-toolbar-btn-primary:hover {
+      background: var(--accent-700);
+      border-color: var(--accent-700);
     }
     .documents-table {
       width: 100%;
@@ -1183,52 +1242,76 @@
       font-size: 12px;
       font-weight: 600;
       color: var(--neutral-500);
-      text-transform: uppercase;
-      background: var(--neutral-100);
+      text-transform: none;
+      background: var(--neutral-50);
+      white-space: nowrap;
+    }
+    .documents-table th.sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+    .documents-table th.sortable:hover {
+      color: var(--neutral-700);
+    }
+    .documents-table th .sort-icon {
+      font-size: 16px;
+      vertical-align: middle;
+      margin-left: 2px;
+      opacity: 0.5;
+    }
+    .documents-table th.sortable:hover .sort-icon {
+      opacity: 1;
     }
     .documents-table td {
       font-size: 14px;
       color: var(--neutral-700);
+      background: white;
+    }
+    .documents-table tbody tr:hover td {
+      background: var(--neutral-100);
+    }
+    .documents-table tbody tr.selected td {
+      background: var(--accent-50);
     }
     .doc-checkbox {
-      width: 40px;
+      width: 48px;
     }
-    .doc-name {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .doc-checkbox input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--accent-600);
     }
-    .doc-name .material-icons-outlined {
-      color: var(--accent-600);
-      font-size: 20px;
-    }
-    .doc-type {
-      color: var(--neutral-500);
-    }
-    .doc-uploaded {
-      color: var(--neutral-500);
+    .doc-id {
+      color: var(--neutral-600);
+      font-family: monospace;
       font-size: 13px;
     }
-    .doc-actions {
-      width: 50px;
-      text-align: center;
+    .doc-title {
+      font-weight: 500;
+      color: var(--neutral-900);
     }
-    .doc-menu-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--neutral-500);
-      padding: 4px;
-      border-radius: 4px;
-      transition: background 0.2s;
+    .doc-type {
+      color: var(--neutral-600);
     }
-    .doc-menu-btn:hover {
-      background: var(--neutral-100);
+    .doc-format {
+      color: var(--neutral-600);
+      font-weight: 500;
+    }
+    .doc-date {
+      color: var(--neutral-600);
+      white-space: nowrap;
+    }
+    .doc-size {
+      color: var(--neutral-600);
+      text-align: right;
+      white-space: nowrap;
     }
     .documents-empty {
       text-align: center;
       padding: 48px 24px;
       color: var(--neutral-500);
+      background: white;
     }
     .documents-empty .material-icons-outlined {
       font-size: 48px;
@@ -2693,9 +2776,26 @@
             <div class="documents-container">
               <div class="documents-header">
                 <h2 class="documents-title">Dokumente</h2>
-                <button class="doc-add-btn" onclick="openUploadDialog()" aria-label="Dokument hinzufügen">
-                  <span class="material-icons-outlined">add</span>
-                </button>
+              </div>
+              <div class="documents-toolbar">
+                <div class="documents-search">
+                  <span class="material-icons-outlined">search</span>
+                  <input type="text" id="documentSearchInput" placeholder="Alle Spalten filtern" onkeyup="filterDocuments(this.value)">
+                </div>
+                <div class="documents-actions">
+                  <button class="doc-toolbar-btn" onclick="deleteSelectedDocuments()" title="Löschen">
+                    <span class="material-icons-outlined">delete</span>
+                    <span>Löschen</span>
+                  </button>
+                  <button class="doc-toolbar-btn" onclick="downloadSelectedDocuments()" title="Herunterladen">
+                    <span class="material-icons-outlined">download</span>
+                    <span>Herunterladen</span>
+                  </button>
+                  <button class="doc-toolbar-btn doc-toolbar-btn-primary" onclick="openUploadDialog()" title="Hinzufügen">
+                    <span class="material-icons-outlined">add</span>
+                    <span>Hinzufügen</span>
+                  </button>
+                </div>
               </div>
               <div id="documentsTableContainer">
                 ${renderDocumentsTable(prop.documents)}
@@ -2848,7 +2948,7 @@
       return iconMap[ext] || { icon: 'description', class: 'default' };
     }
 
-    // Format document upload date
+    // Format document upload date with time
     function formatDocumentDate(isoDate) {
       const date = new Date(isoDate);
       const day = String(date.getDate()).padStart(2, '0');
@@ -2857,6 +2957,15 @@
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
       return `${day}.${month}.${year} ${hours}:${minutes}`;
+    }
+
+    // Format document date only (without time)
+    function formatDocumentDateOnly(isoDate) {
+      const date = new Date(isoDate);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}.${month}.${year}`;
     }
 
     // Render documents table
@@ -2871,27 +2980,20 @@
       }
 
       const rows = documents.map(doc => {
-        const iconInfo = getDocumentIcon(doc.name);
+        const format = getFileExtension(doc.name).toUpperCase();
+        const size = doc.size || '-';
+        const dateOnly = formatDocumentDateOnly(doc.uploadedAt);
         return `
-          <tr data-doc-id="${doc.id}">
+          <tr data-doc-id="${doc.id}" class="doc-row">
             <td class="doc-checkbox">
-              <input type="checkbox" aria-label="Dokument auswählen">
+              <input type="checkbox" aria-label="Dokument auswählen" onchange="updateDocumentSelection()">
             </td>
-            <td>
-              <div class="doc-name">
-                <div class="doc-icon ${iconInfo.class}">
-                  <span class="material-icons-outlined">${iconInfo.icon}</span>
-                </div>
-                <span class="doc-name-text">${doc.name}</span>
-              </div>
-            </td>
-            <td>${doc.type}</td>
-            <td class="doc-uploaded">${doc.uploadedBy}, ${formatDocumentDate(doc.uploadedAt)}</td>
-            <td class="doc-actions">
-              <button class="doc-action-btn" onclick="showDocumentMenu(event, '${doc.id}')" aria-label="Aktionen">
-                <span class="material-icons-outlined">more_vert</span>
-              </button>
-            </td>
+            <td class="doc-id">${doc.id}</td>
+            <td class="doc-title">${doc.title || doc.name}</td>
+            <td class="doc-type">${doc.type}</td>
+            <td class="doc-format">${format}</td>
+            <td class="doc-date">${dateOnly}</td>
+            <td class="doc-size">${size}</td>
           </tr>
         `;
       }).join('');
@@ -2903,10 +3005,24 @@
               <th class="doc-checkbox">
                 <input type="checkbox" aria-label="Alle Dokumente auswählen" onchange="toggleAllDocuments(this)">
               </th>
-              <th>Bezeichnung</th>
-              <th>Dokument Art</th>
-              <th>Hochgeladen</th>
-              <th></th>
+              <th class="sortable" onclick="sortDocuments('id')">
+                <span>ID</span>
+                <span class="material-icons-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable" onclick="sortDocuments('title')">
+                <span>Titel</span>
+                <span class="material-icons-outlined sort-icon">unfold_more</span>
+              </th>
+              <th class="sortable" onclick="sortDocuments('type')">
+                <span>Typ</span>
+                <span class="material-icons-outlined sort-icon">unfold_more</span>
+              </th>
+              <th>Format</th>
+              <th class="sortable" onclick="sortDocuments('date')">
+                <span>Datum</span>
+                <span class="material-icons-outlined sort-icon">unfold_more</span>
+              </th>
+              <th>Grösse</th>
             </tr>
           </thead>
           <tbody>
@@ -2919,7 +3035,110 @@
     // Toggle all document checkboxes
     function toggleAllDocuments(headerCheckbox) {
       const checkboxes = document.querySelectorAll('.documents-table tbody input[type="checkbox"]');
-      checkboxes.forEach(cb => cb.checked = headerCheckbox.checked);
+      checkboxes.forEach(cb => {
+        cb.checked = headerCheckbox.checked;
+        cb.closest('tr').classList.toggle('selected', headerCheckbox.checked);
+      });
+    }
+
+    // Update document selection state
+    function updateDocumentSelection() {
+      const checkboxes = document.querySelectorAll('.documents-table tbody input[type="checkbox"]');
+      const headerCheckbox = document.querySelector('.documents-table thead input[type="checkbox"]');
+
+      checkboxes.forEach(cb => {
+        cb.closest('tr').classList.toggle('selected', cb.checked);
+      });
+
+      const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+      const someChecked = Array.from(checkboxes).some(cb => cb.checked);
+
+      if (headerCheckbox) {
+        headerCheckbox.checked = allChecked;
+        headerCheckbox.indeterminate = someChecked && !allChecked;
+      }
+    }
+
+    // Filter documents by search term
+    function filterDocuments(searchTerm) {
+      const rows = document.querySelectorAll('.documents-table tbody tr');
+      const term = searchTerm.toLowerCase();
+
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(term) ? '' : 'none';
+      });
+    }
+
+    // Sort documents by column
+    let currentSortColumn = null;
+    let currentSortDirection = 'asc';
+
+    function sortDocuments(column) {
+      const tbody = document.querySelector('.documents-table tbody');
+      if (!tbody) return;
+
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+
+      // Toggle direction if same column
+      if (currentSortColumn === column) {
+        currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSortColumn = column;
+        currentSortDirection = 'asc';
+      }
+
+      const columnIndex = {
+        'id': 1,
+        'title': 2,
+        'type': 3,
+        'date': 5
+      }[column];
+
+      rows.sort((a, b) => {
+        const aVal = a.cells[columnIndex]?.textContent.trim() || '';
+        const bVal = b.cells[columnIndex]?.textContent.trim() || '';
+
+        let comparison = aVal.localeCompare(bVal, 'de');
+        return currentSortDirection === 'desc' ? -comparison : comparison;
+      });
+
+      rows.forEach(row => tbody.appendChild(row));
+    }
+
+    // Delete selected documents
+    function deleteSelectedDocuments() {
+      const selected = document.querySelectorAll('.documents-table tbody input[type="checkbox"]:checked');
+      if (selected.length === 0) {
+        alert('Bitte wählen Sie mindestens ein Dokument aus.');
+        return;
+      }
+
+      if (confirm(`Möchten Sie ${selected.length} Dokument(e) wirklich löschen?`)) {
+        selected.forEach(cb => {
+          const row = cb.closest('tr');
+          if (row) row.remove();
+        });
+
+        // Update header checkbox
+        const headerCheckbox = document.querySelector('.documents-table thead input[type="checkbox"]');
+        if (headerCheckbox) {
+          headerCheckbox.checked = false;
+          headerCheckbox.indeterminate = false;
+        }
+      }
+    }
+
+    // Download selected documents
+    function downloadSelectedDocuments() {
+      const selected = document.querySelectorAll('.documents-table tbody input[type="checkbox"]:checked');
+      if (selected.length === 0) {
+        alert('Bitte wählen Sie mindestens ein Dokument aus.');
+        return;
+      }
+
+      const docIds = Array.from(selected).map(cb => cb.closest('tr').dataset.docId);
+      alert(`Download von ${docIds.length} Dokument(en) wird gestartet...\n\nIDs: ${docIds.join(', ')}`);
     }
 
     // Show document context menu (placeholder - could be extended)
